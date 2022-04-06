@@ -11,6 +11,7 @@
     <title>Connexion</title>
 </head>
 <body>
+<h1>test</h1>
 <form method="POST" action="login">
     <input type="login" placeholder="login" name="login">
     <input type="password" placeholder="mot de passe" name="password">
