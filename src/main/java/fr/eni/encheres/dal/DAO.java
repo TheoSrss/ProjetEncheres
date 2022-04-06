@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface DAO<T> {
 
-    public void insert(T t) throws DALException;
+    public boolean insert(T t) throws DALException;
 
     public List<T> selectAll() throws DALException;
 

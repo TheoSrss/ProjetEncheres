@@ -45,15 +45,14 @@ public class UserDAOJdbcImpl implements UserDAO {
     }
 
     @Override
-    public void insert(User user) throws DALException {
+    public boolean insert(User user) throws DALException {
 
         try {
-            Connection connection = ConnectionProvider.getConnection();
+            Connection con = ConnectionProvider.getConnection();
 
+            stmt = con.prepareStatement("INSERT INTO USER VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            String request = "INSERT INTO USER VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-            stmt = con.prepareStatement(request);
-
+            stmt.setInt(1, 8);
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getSurname());
             stmt.setString(4, user.getFirstName());
@@ -66,8 +65,17 @@ public class UserDAOJdbcImpl implements UserDAO {
             stmt.setInt(11, user.getCredit());
             stmt.setBoolean(12, user.isAdmin());
 
-            stmt.executeQuery();
-
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            System.out.println("ooooo");
+//            if (rs.next()) {
+//                System.out.println(rs);
+////                user.setn(rs.getInt(1));
+//            }
+//            if(rs.next()) {
+//                System.out.println(rs.getInt(1));
+//            }
+return true;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }

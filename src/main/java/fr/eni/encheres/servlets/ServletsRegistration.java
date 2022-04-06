@@ -5,6 +5,7 @@ import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.User;
 import fr.eni.encheres.dal.DALException;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,10 @@ import java.util.Objects;
 public class ServletsRegistration extends HttpServlet {
     private UserManager userManager;
 
+    public void init() throws ServletException {
+        userManager = UserManager.getInstance();
+        super.init();
+    }
     protected void doGet(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         request.getRequestDispatcher("WEB-INF/registration.jsp").forward(request, response);
