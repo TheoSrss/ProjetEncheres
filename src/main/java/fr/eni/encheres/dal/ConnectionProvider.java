@@ -1,4 +1,4 @@
-package fr.eni.encheres.bo.dal;
+package fr.eni.encheres.dal;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

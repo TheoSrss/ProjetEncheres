@@ -1,43 +1,42 @@
-package fr.eni.encheres.bo.dal.jdbc;
+package fr.eni.encheres.dal.jdbc;
 
 import fr.eni.encheres.bo.User;
-import fr.eni.encheres.bo.dal.ConnectionProvider;
-import fr.eni.encheres.bo.dal.DALException;
-import fr.eni.encheres.bo.dal.UserDAO;
+import fr.eni.encheres.dal.ConnectionProvider;
+import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.UserDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAOJdbcImpl implements UserDAO {
     PreparedStatement stmt = null;
     Connection con = null;
+
     @Override
     public boolean selectWithloginAndPassword(String login, String password) throws SQLException, DALException {
         User user = null;
 
         try {
-            Connection connection = ConnectionProvider.getConnection();
-//            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/encheres", "root", "");
-
-            Statement statement = connection.createStatement();
-            ResultSet re = statement.executeQuery("select * from user");
+//            ResultSet re = statement.executeQuery("select * from user");
             con = ConnectionProvider.getConnection();
 
-            String request = "SELECT * FROM user WHERE (username=? OR email=?) AND password=?";
-
-            stmt = con.prepareStatement(request);
+            stmt = con.prepareStatement("SELECT * FROM user WHERE (username=? OR email=?) AND password=?");
 
             stmt.setString(1, login);
             stmt.setString(2, login);
             stmt.setString(3, password);
 
             ResultSet resultSet = stmt.executeQuery();
-
-            if (resultSet != null) {
-                return true;
-            } else {
-                return false;
+            System.out.println(resultSet);
+            boolean exist = false;
+            while (resultSet.next()) {
+                exist = true;
             }
+            System.out.println(exist);
+            return exist;
 
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);

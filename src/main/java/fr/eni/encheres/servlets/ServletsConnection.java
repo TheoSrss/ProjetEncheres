@@ -2,7 +2,7 @@ package fr.eni.encheres.servlets;
 
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
-import fr.eni.encheres.bo.dal.DALException;
+import fr.eni.encheres.dal.DALException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,10 +37,11 @@ public class ServletsConnection extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 //        request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-
+        System.out.println(login);
+        System.out.println(password);
         try {
             boolean exist = userManager.connexionIsGood(login, password);
-
+            System.out.println(exist);
             if (!exist){
                 request.getRequestDispatcher("WEB-INF/connection.jsp").forward(request, response);
             }else{
