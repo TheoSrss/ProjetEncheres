@@ -2,7 +2,7 @@
 <Context>
     <Resource
             name="jdbc/pool_cnx"
-            driverClassName="com.mysql.jdbc.Driver"
+            driverClassName="com.mysql.cj.jdbc.Driver"
             type="javax.sql.DataSource"
             url="jdbc:mysql://localhost/encheres"
             username="root"
