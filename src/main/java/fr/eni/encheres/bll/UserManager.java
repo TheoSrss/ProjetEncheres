@@ -1,9 +1,9 @@
 package fr.eni.encheres.bll;
 
 import fr.eni.encheres.bo.User;
-import fr.eni.encheres.bo.dal.DALException;
-import fr.eni.encheres.bo.dal.DAOFactory;
-import fr.eni.encheres.bo.dal.UserDAO;
+import fr.eni.encheres.dal.DALException;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.UserDAO;
 
 import java.sql.SQLException;
 
@@ -23,10 +23,7 @@ public class UserManager {
     }
 
     public static boolean connexionIsGood(String login, String password) throws BLLException, DALException, SQLException {
-
-        boolean a=userDAO.selectWithloginAndPassword(login,password);
-
-        return false;
+        return userDAO.selectWithloginAndPassword(login,password);
     }
 
     public void registration(User user) throws BLLException, DALException {

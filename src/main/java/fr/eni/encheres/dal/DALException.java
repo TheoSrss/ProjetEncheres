@@ -1,4 +1,4 @@
-package fr.eni.encheres.bo.dal;
+package fr.eni.encheres.dal;
 
 public class DALException extends Exception {
     public DALException() {

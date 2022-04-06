@@ -1,4 +1,4 @@
-package fr.eni.encheres.bo.dal.jdbc;
+package fr.eni.encheres.dal.jdbc;
 
 import java.sql.*;
 

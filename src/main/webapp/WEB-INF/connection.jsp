@@ -12,8 +12,8 @@
 </head>
 <body>
 <form method="POST" action="login">
-    <input type="login" placeholder="login">
-    <input type="password" placeholder="mot de passe">
+    <input type="login" placeholder="login" name="login">
+    <input type="password" placeholder="mot de passe" name="password">
 <input type="submit" value="Se connecter">
 </form>
 <a href="registration"><button>Créer un compte</button> </a>

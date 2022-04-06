@@ -3,7 +3,7 @@ package fr.eni.encheres.servlets;
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.User;
-import fr.eni.encheres.bo.dal.DALException;
+import fr.eni.encheres.dal.DALException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
