@@ -27,9 +27,8 @@ public class UserManager {
     }
 
     public void registration(User user) throws BLLException, DALException {
-
         try {
-            userDAO.insert(user);
+            boolean r=userDAO.insert(user);
 
         }catch (DALException e) {
             throw new BLLException("Fail registration");

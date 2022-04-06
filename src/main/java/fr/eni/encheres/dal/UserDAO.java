@@ -7,5 +7,5 @@ import java.sql.SQLException;
 public interface UserDAO extends DAO<User>  {
 
     public boolean selectWithloginAndPassword(String login, String password) throws SQLException, DALException;
-    public void insert(User user) throws DALException;
+    public boolean insert(User user) throws DALException;
 }
