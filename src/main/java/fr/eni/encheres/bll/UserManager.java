@@ -1,10 +1,9 @@
 package fr.eni.encheres.bll;
 
 import fr.eni.encheres.bo.User;
-import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.UserDAO;
-import fr.eni.encheres.bll. BLLException;
+import fr.eni.encheres.bo.dal.DALException;
+import fr.eni.encheres.bo.dal.DAOFactory;
+import fr.eni.encheres.bo.dal.UserDAO;
 
 import java.sql.SQLException;
 
@@ -28,6 +27,16 @@ public class UserManager {
         boolean a=userDAO.selectWithloginAndPassword(login,password);
 
         return false;
+    }
+
+    public void registration(User user) throws BLLException, DALException {
+
+        try {
+            userDAO.insert(user);
+
+        }catch (DALException e) {
+            throw new BLLException("Fail registration");
+        }
     }
 
 

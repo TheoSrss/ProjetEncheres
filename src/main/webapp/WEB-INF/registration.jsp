@@ -8,11 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <form>
-        <label for="usurname">Pseudo :</label>
-        <input type="text" id="usurname">
+    <form method="POST" action="registration">
+        <label for="username">Pseudo :</label>
+        <input type="text" id="username">
         <label for="surname">Nom :</label>
         <input type="text" id="surname">
+        <label for="firstName">Prénom :</label>
+        <input type="text" id="firstName">
         <label for="email">Email :</label>
         <input type="text" id="email">
         <label for="phone">Téléphone :</label>

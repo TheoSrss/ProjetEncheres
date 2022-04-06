@@ -1,6 +1,4 @@
-package fr.eni.encheres.dal.jdbc;
-
-import fr.eni.encheres.dal.ConnectionProvider;
+package fr.eni.encheres.bo.dal.jdbc;
 
 import java.sql.*;
 
@@ -8,8 +6,8 @@ public class JDBC {
 
     public static void main(String[] args) throws SQLException {
         try {
-//            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/encheres", "root", "");
-            Connection connection = ConnectionProvider.getConnection();;
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/encheres", "root", "");
+//            Connection connection = ConnectionProvider.getConnection();;
 
             Statement statement = connection.createStatement();
             ResultSet re = statement.executeQuery("select * from user");

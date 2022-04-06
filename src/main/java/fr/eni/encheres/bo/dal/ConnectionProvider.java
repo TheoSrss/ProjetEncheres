@@ -1,4 +1,4 @@
-package fr.eni.encheres.dal;
+package fr.eni.encheres.bo.dal;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ConnectionProvider {
-    private static DataSource dataSource;
+    private static final DataSource dataSource;
 
     static {
         Context context;

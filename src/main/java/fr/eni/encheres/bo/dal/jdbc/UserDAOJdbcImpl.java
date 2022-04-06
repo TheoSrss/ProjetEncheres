@@ -1,20 +1,19 @@
-package fr.eni.encheres.dal.jdbc;
+package fr.eni.encheres.bo.dal.jdbc;
 
 import fr.eni.encheres.bo.User;
-import fr.eni.encheres.dal.ConnectionProvider;
-import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.UserDAO;
+import fr.eni.encheres.bo.dal.ConnectionProvider;
+import fr.eni.encheres.bo.dal.DALException;
+import fr.eni.encheres.bo.dal.UserDAO;
 
 import java.sql.*;
 import java.util.List;
 
 public class UserDAOJdbcImpl implements UserDAO {
-
+    PreparedStatement stmt = null;
+    Connection con = null;
     @Override
     public boolean selectWithloginAndPassword(String login, String password) throws SQLException, DALException {
         User user = null;
-        PreparedStatement stmt = null;
-        Connection con = null;
 
         try {
             Connection connection = ConnectionProvider.getConnection();
@@ -24,9 +23,9 @@ public class UserDAOJdbcImpl implements UserDAO {
             ResultSet re = statement.executeQuery("select * from user");
             con = ConnectionProvider.getConnection();
 
-            String r = "SELECT * FROM user WHERE (username=? OR email=?) AND password=?";
+            String request = "SELECT * FROM user WHERE (username=? OR email=?) AND password=?";
 
-            stmt = con.prepareStatement(r);
+            stmt = con.prepareStatement(request);
 
             stmt.setString(1, login);
             stmt.setString(2, login);
@@ -48,6 +47,32 @@ public class UserDAOJdbcImpl implements UserDAO {
 
     @Override
     public void insert(User user) throws DALException {
+
+        try {
+            Connection connection = ConnectionProvider.getConnection();
+
+
+            String request = "INSERT INTO USER VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            stmt = con.prepareStatement(request);
+
+            stmt.setString(2, user.getUsername());
+            stmt.setString(3, user.getSurname());
+            stmt.setString(4, user.getFirstName());
+            stmt.setString(5, user.getEmail());
+            stmt.setString(6, user.getPhone());
+            stmt.setString(7, user.getStreet());
+            stmt.setString(8, user.getPostalCode());
+            stmt.setString(9, user.getCity());
+            stmt.setString(10, user.getPassword());
+            stmt.setInt(11, user.getCredit());
+            stmt.setBoolean(12, user.isAdmin());
+
+            stmt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+
 
     }
 
