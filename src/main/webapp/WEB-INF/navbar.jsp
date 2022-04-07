@@ -12,7 +12,7 @@
         <c:if test="${sessionScope.user != null }">
             <li><a>Encheres</a></li>
             <li><a>Vendre un article</a></li>
-            <li><a>Mon profil</a></li>
+            <li><a href="profile/?idUser=${sessionScope.user.id}">Mon profil</a></li>
             <li><a>Déconnexion</a></li>
         </c:if>
 

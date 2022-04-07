@@ -34,7 +34,7 @@ public class ServletsConnection extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         try {
-            User user = userManager.connexionIsGood(login, password);
+            User user = UserManager.connexionIsGood(login, password);
 
             if (user==null){
                 request.getRequestDispatcher("WEB-INF/failConnection.jsp").forward(request, response);

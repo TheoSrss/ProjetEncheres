@@ -33,8 +33,14 @@ public class UserManager {
 
         }catch (DALException e) {
             throw new BLLException("BLL "+ e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
+    public User getUserById(int id) throws BLLException, DALException, SQLException {
 
+        return userDAO.getUserById(id);
+    }
 
 }
