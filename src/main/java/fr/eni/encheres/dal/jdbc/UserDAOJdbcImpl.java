@@ -81,7 +81,7 @@ public class UserDAOJdbcImpl implements UserDAO {
                     user.setId(r.getInt(1));
                 }
             }
-//            con.close();
+            con.close();
 
             return user;
         } catch (SQLException e) {
@@ -90,7 +90,7 @@ public class UserDAOJdbcImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(int id) throws DALException, SQLException {
+    public User getUserById(int id) throws DALException {
         User user = null;
         try {
             con = ConnectionProvider.getConnection();
@@ -115,7 +115,6 @@ public class UserDAOJdbcImpl implements UserDAO {
                         resultSet.getBoolean("admin")
                 );
             }
-            con.close();
 
             return user;
         } catch (SQLException e) {
@@ -125,22 +124,19 @@ public class UserDAOJdbcImpl implements UserDAO {
     }
 
     @Override
-    public List<User> selectAll() throws DALException {
-        return null;
-    }
+    public void deleteUser(int id) throws DALException {
 
-    @Override
-    public User selectByID(int id) throws DALException {
-        return null;
-    }
+        try {
+            con = ConnectionProvider.getConnection();
 
-    @Override
-    public void update(User user) throws DALException {
+            stmt = con.prepareStatement("DELETE FROM user where id=?");
+            stmt.setInt(1, id);
 
-    }
+            stmt.executeUpdate();
+            con.close();
 
-    @Override
-    public void delete(int id) throws DALException {
-
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
     }
 }

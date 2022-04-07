@@ -42,5 +42,9 @@ public class UserManager {
 
         return userDAO.getUserById(id);
     }
+    public void deleteUser(int id) throws BLLException, DALException, SQLException {
+
+        userDAO.deleteUser(id);
+    }
 
 }
