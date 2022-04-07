@@ -29,7 +29,7 @@
     </div>
     <div>
         <span>Rue</span>
-        <span>${profileUser.street}</span>
+        <span>${profileUser.street}</span>s
     </div>
     <div>
         <span>Code postal</span>
@@ -40,6 +40,18 @@
         <span>${profileUser.city}</span>
     </div>
 </div>
-
+${sessionScope.user.id}
+${profileUser.id}
+<c:if test="${sessionScope.user != null }">
+    oui
+    <c:if test="${profileUser.id eq sessionScope.user.id }">
+        <a href="editProfile">
+            <button>Modifier mon compte</button>
+        </a>
+        <a href="deleteProfile">
+            <button>Supprimer mon compte</button>
+        </a>
+    </c:if>
+</c:if>
 </body>
 </html>

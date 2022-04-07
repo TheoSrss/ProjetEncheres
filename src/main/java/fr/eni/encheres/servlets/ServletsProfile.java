@@ -34,7 +34,6 @@ public class ServletsProfile extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
                 } else {
                     request.setAttribute("profileUser", user);
-                    System.out.println(user.getUsername());
 
                     request.getRequestDispatcher("WEB-INF/profile.jsp").forward(request, response);
                     return ;
