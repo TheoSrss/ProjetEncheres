@@ -1,6 +1,11 @@
-
+<%--
+  Created by IntelliJ IDEA.
+  User: ThéoSOURISSEAU
+  Date: 04/04/2022
+  Time: 14:08
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
     <title>Connexion</title>
@@ -12,6 +17,7 @@
     <input type="password" placeholder="mot de passe" name="password">
     <input type="submit" value="Se connecter">
 </form>
+<span>Identifiant et/ou mot de passe incorrect</span>
 <a href="registration">
     <button>Créer un compte</button>
 </a>

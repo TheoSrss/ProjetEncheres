@@ -1,11 +1,13 @@
 package fr.eni.encheres.dal;
 
+import fr.eni.encheres.bo.User;
+
 import java.util.List;
 
 
 public interface DAO<T> {
 
-    public boolean insert(T t) throws DALException;
+    public T insert(T t) throws DALException;
 
     public List<T> selectAll() throws DALException;
 

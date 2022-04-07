@@ -26,12 +26,13 @@ public class UserManager {
         return userDAO.selectWithloginAndPassword(login,password);
     }
 
-    public void registration(User user) throws BLLException, DALException {
+    public User registration(User user) throws BLLException, DALException {
         try {
-            boolean r=userDAO.insert(user);
+            User userReturn=userDAO.insert(user);
+            return userReturn;
 
         }catch (DALException e) {
-            throw new BLLException("Fail registration");
+            throw new BLLException("BLL "+ e);
         }
     }
 

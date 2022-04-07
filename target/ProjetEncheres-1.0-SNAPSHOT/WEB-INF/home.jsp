@@ -8,7 +8,6 @@
     <title>Accueil</title>
 </head>
 <body>
-<%@ include file = "navbar.jsp" %>
 <h1>HOme</h1>
 </body>
 </html>

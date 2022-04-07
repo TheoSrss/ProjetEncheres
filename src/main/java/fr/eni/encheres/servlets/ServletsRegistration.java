@@ -38,19 +38,26 @@ public class ServletsRegistration extends HttpServlet {
                         request.getParameter("surname"),
                         request.getParameter("firstName"),
                         request.getParameter("email"),
-                        request.getParameter("phone"),
+                        Integer.parseInt(request.getParameter("phone")),
                         request.getParameter("street"),
-                        request.getParameter("postalCode"),
+                        Integer.parseInt(request.getParameter("postalCode")),
                         request.getParameter("city"),
                         request.getParameter("password"),
                         100, false
                 );
 
-                userManager.registration(user);
+                User userRegistration=userManager.registration(user);
 
+                request.getSession().setAttribute("user", userRegistration);
+
+                request.getRequestDispatcher("WEB-INF/home.jsp" ).forward(request, response);
             }
         } catch (BLLException e) {
-            e.printStackTrace();
+            try {
+                throw new BLLException("BLL " + e);
+            } catch (BLLException ex) {
+                ex.printStackTrace();
+            }
         } catch (DALException e) {
             e.printStackTrace();
         }

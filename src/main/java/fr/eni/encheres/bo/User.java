@@ -6,9 +6,9 @@ public class User {
     private String surname;
     private String firstName;
     private String email;
-    private String phone;
+    private int phone;
     private String street;
-    private String postalCode;
+    private int postalCode;
     private String city;
     private String password;
     private int credit;
@@ -20,7 +20,7 @@ public class User {
         this.username = username;
         this.firstName = firstName;
     }
-    public User( String username, String surname, String firstName, String email, String phone, String street, String postalCode, String city, String password, int credit, boolean isAdmin) {
+    public User( String username, String surname, String firstName, String email, int phone, String street, int postalCode, String city, String password, int credit, boolean isAdmin) {
 //        this.id = id;
         this.username = username;
         this.surname = surname;
@@ -34,7 +34,7 @@ public class User {
         this.credit = credit;
         this.isAdmin = isAdmin;
     }
-    public User(int id, String username, String surname, String firstName, String email, String phone, String street, String postalCode, String city, String password, int credit, boolean isAdmin) {
+    public User(int id, String username, String surname, String firstName, String email, int phone, String street, int postalCode, String city, String password, int credit, boolean isAdmin) {
         this.id = id;
         this.username = username;
         this.surname = surname;
@@ -89,11 +89,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
+    public int getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
 
@@ -105,11 +105,11 @@ public class User {
         this.street = street;
     }
 
-    public String getPostalCode() {
+    public int getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
 
