@@ -46,7 +46,6 @@ public class ServletsRegistration extends HttpServlet {
                         100, false
                 );
 
-                System.out.println(user);
                 userManager.registration(user);
 
             }

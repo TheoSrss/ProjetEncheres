@@ -6,17 +6,28 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>--%>
+
 <html>
 <head>
     <title>Connexion</title>
 </head>
 <body>
+<%@ include file = "navbar.jsp" %>
+<%--<c:if test="${sessionScope.user == null }">--%>
+<%--    pas connecté--%>
+<%--</c:if>--%>
+<%--<c:if test="${sessionScope.user != null }">--%>
+<%--    connecté--%>
+<%--</c:if>--%>
 <form method="POST" action="login">
     <input type="login" placeholder="login" name="login">
     <input type="password" placeholder="mot de passe" name="password">
-<input type="submit" value="Se connecter">
+    <input type="submit" value="Se connecter">
 </form>
-<a href="registration"><button>Créer un compte</button> </a>
+<a href="registration">
+    <button>Créer un compte</button>
+</a>
 
 </body>
 </html>

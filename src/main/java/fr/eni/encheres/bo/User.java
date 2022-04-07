@@ -34,6 +34,20 @@ public class User {
         this.credit = credit;
         this.isAdmin = isAdmin;
     }
+    public User(int id, String username, String surname, String firstName, String email, String phone, String street, String postalCode, String city, String password, int credit, boolean isAdmin) {
+        this.id = id;
+        this.username = username;
+        this.surname = surname;
+        this.firstName = firstName;
+        this.email = email;
+        this.phone = phone;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.password = password;
+        this.credit = credit;
+        this.isAdmin = isAdmin;
+    }
 
     public int getId() {
         return id;

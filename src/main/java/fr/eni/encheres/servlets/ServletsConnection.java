@@ -2,12 +2,14 @@ package fr.eni.encheres.servlets;
 
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
+import fr.eni.encheres.bo.User;
 import fr.eni.encheres.dal.DALException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -22,32 +24,25 @@ public class ServletsConnection extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
-//        HttpSession session = request.getSession();
-//
-//        System.out.println(session.getId());
-//        request.setAttribute("session", session);
+        request.getSession().setAttribute("user", null);
 
         request.getRequestDispatcher("WEB-INF/connection.jsp").forward(request, response);
-
     }
 
     protected void doPost(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-//        request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-        System.out.println(login);
-        System.out.println(password);
         try {
-            boolean exist = userManager.connexionIsGood(login, password);
-            System.out.println(exist);
-            if (!exist){
-                request.getRequestDispatcher("WEB-INF/connection.jsp").forward(request, response);
-            }else{
-                request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
-            }
+            User user = userManager.connexionIsGood(login, password);
 
+            if (user==null){
+                request.getRequestDispatcher("WEB-INF/failConnection.jsp").forward(request, response);
+            }else{
+
+                request.getSession().setAttribute("user", user);
+                request.getRequestDispatcher("WEB-INF/home.jsp" ).forward(request, response);
+            }
         } catch (BLLException | DALException | SQLException e) {
             e.printStackTrace();
         }

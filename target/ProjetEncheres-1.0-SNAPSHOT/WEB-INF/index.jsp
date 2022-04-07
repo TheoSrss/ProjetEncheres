@@ -5,9 +5,8 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
+<%@ include file = "navbar.jsp" %>
+
 <a href="login">Helleo Servlet2</a>
 </body>
 </html>

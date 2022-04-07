@@ -22,7 +22,7 @@ public class UserManager {
         return userManager;
     }
 
-    public static boolean connexionIsGood(String login, String password) throws BLLException, DALException, SQLException {
+    public static User connexionIsGood(String login, String password) throws BLLException, DALException, SQLException {
         return userDAO.selectWithloginAndPassword(login,password);
     }
 

@@ -16,11 +16,10 @@ public class UserDAOJdbcImpl implements UserDAO {
     Connection con = null;
 
     @Override
-    public boolean selectWithloginAndPassword(String login, String password) throws SQLException, DALException {
-        User user = null;
+    public User selectWithloginAndPassword(String login, String password) throws SQLException, DALException {
+//        User user = null;
 
         try {
-//            ResultSet re = statement.executeQuery("select * from user");
             con = ConnectionProvider.getConnection();
 
             stmt = con.prepareStatement("SELECT * FROM user WHERE (username=? OR email=?) AND password=?");
@@ -30,14 +29,25 @@ public class UserDAOJdbcImpl implements UserDAO {
             stmt.setString(3, password);
 
             ResultSet resultSet = stmt.executeQuery();
-            System.out.println(resultSet);
-            boolean exist = false;
+            User user = null;
             while (resultSet.next()) {
-                exist = true;
-            }
-            System.out.println(exist);
-            return exist;
+                user = new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("street"),
+                        resultSet.getString("postalCode"),
+                        resultSet.getString("city"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("credit"),
+                        resultSet.getBoolean("admin")
 
+                );
+            }
+            return user;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
@@ -67,15 +77,7 @@ public class UserDAOJdbcImpl implements UserDAO {
 
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            System.out.println("ooooo");
-//            if (rs.next()) {
-//                System.out.println(rs);
-////                user.setn(rs.getInt(1));
-//            }
-//            if(rs.next()) {
-//                System.out.println(rs.getInt(1));
-//            }
-return true;
+            return true;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
