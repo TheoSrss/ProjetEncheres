@@ -47,9 +47,7 @@ public class ServletsRegistration extends HttpServlet {
                 );
 
                 User userRegistration=userManager.registration(user);
-
                 request.getSession().setAttribute("user", userRegistration);
-
                 request.getRequestDispatcher("WEB-INF/home.jsp" ).forward(request, response);
             }
         } catch (BLLException e) {
@@ -62,8 +60,6 @@ public class ServletsRegistration extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-
 }
 
 

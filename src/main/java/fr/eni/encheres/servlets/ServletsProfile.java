@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/profile/*")
+@WebServlet("/profile")
 public class ServletsProfile extends HttpServlet {
     private UserManager userManager;
 
@@ -37,6 +37,7 @@ public class ServletsProfile extends HttpServlet {
                     System.out.println(user.getUsername());
 
                     request.getRequestDispatcher("WEB-INF/profile.jsp").forward(request, response);
+                    return ;
                 }
             } catch (BLLException | DALException | SQLException e) {
                 e.printStackTrace();

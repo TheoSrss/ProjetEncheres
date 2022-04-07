@@ -81,7 +81,7 @@ public class UserDAOJdbcImpl implements UserDAO {
                     user.setId(r.getInt(1));
                 }
             }
-            con.close();
+//            con.close();
 
             return user;
         } catch (SQLException e) {
