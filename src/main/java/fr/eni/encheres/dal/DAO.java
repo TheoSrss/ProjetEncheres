@@ -12,5 +12,6 @@ public interface DAO<T> {
 
     public void deleteUser(int id) throws DALException;
     public User getUserById(int id) throws DALException;
+    public void updateUser(T t) throws DALException;
 }
 

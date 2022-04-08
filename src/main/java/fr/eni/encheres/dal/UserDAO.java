@@ -8,4 +8,7 @@ public interface UserDAO extends DAO<User>  {
 
     public User selectWithloginAndPassword(String login, String password) throws SQLException, DALException;
     public User insert(User user) throws DALException, SQLException;
+
+
+    void updateUser(User user) throws DALException;
 }

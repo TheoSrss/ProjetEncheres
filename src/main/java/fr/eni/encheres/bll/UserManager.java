@@ -47,4 +47,7 @@ public class UserManager {
         userDAO.deleteUser(id);
     }
 
+    public void updateUser(User user) throws DALException {
+        userDAO.updateUser(user);
+    }
 }

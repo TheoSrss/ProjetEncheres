@@ -25,16 +25,9 @@ public class ServeltsDeleteUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-
-
             User user = (User) request.getSession().getAttribute("user");
-
-
             userManager.deleteUser(user.getId());
-
-            System.out.println(user.getId());
             request.getSession().removeAttribute("user");
-
         } catch (DALException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -42,8 +35,6 @@ public class ServeltsDeleteUser extends HttpServlet {
         } catch (BLLException e) {
             e.printStackTrace();
         }
-
         request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
-
     }
 }

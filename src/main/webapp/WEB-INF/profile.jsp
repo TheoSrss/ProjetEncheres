@@ -40,11 +40,9 @@
         <span>${profileUser.city}</span>
     </div>
 </div>
-
 <c:if test="${sessionScope.user != null }">
-    oui
     <c:if test="${profileUser.id eq sessionScope.user.id }">
-        <a href="editProfile">
+        <a href="updateUser">
             <button>Modifier mon compte</button>
         </a>
         <a href="deleteUser">

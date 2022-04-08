@@ -6,7 +6,6 @@ import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.UserDAO;
 
 import java.sql.*;
-import java.util.List;
 
 public class UserDAOJdbcImpl implements UserDAO {
     PreparedStatement stmt = null;
@@ -131,6 +130,33 @@ public class UserDAOJdbcImpl implements UserDAO {
 
             stmt = con.prepareStatement("DELETE FROM user where id=?");
             stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+            con.close();
+
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+    }
+
+    @Override
+    public void updateUser(User user) throws DALException {
+        try {
+            System.out.println("good");
+            System.out.println(user.getId());
+            con = ConnectionProvider.getConnection();
+
+            stmt = con.prepareStatement("UPDATE user SET username =?,surname=?,firstName=?,email=?,phone=?,street=?,postalCode=?,city=?,password=?WHERE id=?");
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getSurname());
+            stmt.setString(3, user.getFirstName());
+            stmt.setString(4, user.getEmail());
+            stmt.setInt(5, user.getPhone());
+            stmt.setString(6, user.getStreet());
+            stmt.setInt(7, user.getPostalCode());
+            stmt.setString(8, user.getCity());
+            stmt.setString(9, user.getPassword());
+            stmt.setInt(10, user.getId());
 
             stmt.executeUpdate();
             con.close();
