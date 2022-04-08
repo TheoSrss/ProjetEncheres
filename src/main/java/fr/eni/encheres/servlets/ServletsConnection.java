@@ -5,6 +5,7 @@ import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.User;
 import fr.eni.encheres.dal.DALException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,7 @@ public class ServletsConnection extends HttpServlet {
             } else {
 
                 request.getSession().setAttribute("user", user);
-                request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         } catch (BLLException | DALException | SQLException e) {
             e.printStackTrace();

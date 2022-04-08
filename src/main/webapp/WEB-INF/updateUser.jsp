@@ -4,34 +4,64 @@
     <title>Modifier mon profil</title>
 </head>
 <body>
-
-<form method="POST" action="updateUser">
-    <label for="username" >Pseudo :</label>
-    <input type="text" id="username" name="username" value="${sessionScope.user.username}">
-    <label for="surname">Nom :</label>
-    <input type="text" id="surname" name="surname" value="${sessionScope.user.surname}">
-    <label for="firstName">Prénom :</label>
-    <input type="text" id="firstName" name="firstName"  value="${sessionScope.user.firstName}">
-    <label for="email">Email :</label>
-    <input type="text" id="email" name="email"  value="${sessionScope.user.email}">
-    <label for="phone">Téléphone :</label>
-    <input type="tel" id="phone" name="phone"  value="${sessionScope.user.phone}">
-    <label for="street">Rue :</label>
-    <input type="text" id="street" name="street"  value="${sessionScope.user.street}">
-    <label for="postalCode">Code postal :</label>
-    <input type="number" id="postalCode" name="postalCode"  value="${sessionScope.user.postalCode}">
-    <label for="city">Ville :</label>
-    <input type="text" id="city" name="city"  value="${sessionScope.user.city}">
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="password" value="${sessionScope.user.password}">
-    <label for="passwordCheck">Confirmation:</label>
-    <input type="password" id="passwordCheck" name="passwordCheck">
-    <input type="submit" value="Modifier">
-</form>
 <c:if test="${error != null }">
-    ${error}
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto">${error}</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
 </c:if>
-
-
+<form method="POST" action="updateUser">
+    <div class="form-group">
+        <label class="form-label" for="username">Pseudo :</label>
+        <input class="form-control" type="text" id="username" name="username" value="${sessionScope.user.username}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="surname">Nom :</label>
+        <input class="form-control" type="text" id="surname" name="surname" value="${sessionScope.user.surname}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="firstName">Prénom :</label>
+        <input class="form-control" type="text" id="firstName" name="firstName" value="${sessionScope.user.firstName}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="email">Email :</label>
+        <input class="form-control" type="text" id="email" name="email" value="${sessionScope.user.email}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="phone">Téléphone :</label>
+        <input class="form-control" type="tel" id="phone" name="phone" value="${sessionScope.user.phone}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="street">Rue :</label>
+        <input class="form-control" type="text" id="street" name="street" value="${sessionScope.user.street}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="postalCode">Code postal :</label>
+        <input class="form-control" type="number" id="postalCode" name="postalCode"
+               value="${sessionScope.user.postalCode}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="city">Ville :</label>
+        <input class="form-control" type="text" id="city" name="city" value="${sessionScope.user.city}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="password">Mot de passe :</label>
+        <input class="form-control" type="password" id="password" name="password" value="${sessionScope.user.password}">
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="passwordCheck">Confirmation:</label>
+        <input class="form-control" type="password" id="passwordCheck" name="passwordCheck">
+    </div>
+    <input type="submit" value="Modifier" class="btn btn-primary">
+</form>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+</script>

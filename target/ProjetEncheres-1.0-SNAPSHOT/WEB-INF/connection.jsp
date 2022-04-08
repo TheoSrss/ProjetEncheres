@@ -4,6 +4,16 @@
     <title>Connexion</title>
 </head>
 <body>
+<c:if test="${error != null }">
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto">${error}</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</c:if>
 <div class="container">
     <form method="POST" action="login">
         <div class="form-group">
@@ -19,9 +29,12 @@
     <a href="registration">
         <button class="btn btn-info">Créer un compte</button>
     </a>
-    <c:if test="${error != null }">
-        ${error}
-    </c:if>
+
 </div>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+</script>

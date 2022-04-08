@@ -27,7 +27,7 @@ public class ServeltsUpdateUser extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/updateUser.jsp").forward(request, response);
 
         } else {
-            request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

@@ -11,6 +11,27 @@
     <title>Créerun compte</title>
 </head>
 <body>
+<c:if test="${error != null }">
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto">${error}</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</c:if>
+<c:if test="${sessionScope.user != null }">
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto">Vous êtes déjà inscrit sur la platforme</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+</c:if>
 <div class="container">
     <c:if test="${sessionScope.user == null }">
         <form method="POST" action="registration">
@@ -57,12 +78,11 @@
                 <input type="submit" value="Créer" class="btn btn-primary">
         </form>
     </c:if>
-    <c:if test="${sessionScope.user != null }">
-        <span>Vous êtes déjà inscrit sur la platforme</span>
-    </c:if>
-    <c:if test="${error != null }">
-        ${error}
-    </c:if>
 </div>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+</script>

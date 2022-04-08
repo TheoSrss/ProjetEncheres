@@ -31,7 +31,7 @@ public class ServletsProfile extends HttpServlet {
             try {
                 user = userManager.getUserById(Integer.parseInt(idUser));
                 if (user == null) {
-                    request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
                     request.setAttribute("profileUser", user);
 
@@ -42,7 +42,7 @@ public class ServletsProfile extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
-            request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

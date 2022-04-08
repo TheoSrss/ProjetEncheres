@@ -5,5 +5,6 @@
     <title>Accueil</title>
 </head>
 <body>
+<span>index</span>
 </body>
 </html>

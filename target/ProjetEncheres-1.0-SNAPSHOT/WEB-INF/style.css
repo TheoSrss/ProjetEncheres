@@ -23,3 +23,23 @@ form{
     left: 50%;
     transform: translate(-50%);
 }
+
+.toast{
+    margin-top: 20px;
+    position: absolute;
+    right: 2%;
+}
+.mr-auto{
+    color: #8e2f2f;
+}
+.list-group-item{
+    text-align: center;
+}
+
+.footerButtons{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
