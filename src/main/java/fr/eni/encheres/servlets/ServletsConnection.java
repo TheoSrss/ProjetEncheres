@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -36,12 +35,14 @@ public class ServletsConnection extends HttpServlet {
         try {
             User user = UserManager.connexionIsGood(login, password);
 
-            if (user==null){
-                request.getRequestDispatcher("WEB-INF/failConnection.jsp").forward(request, response);
-            }else{
+            if (user == null) {
+                request.setAttribute("error", "Identifiant et/ou mot de passe incorrect");
+
+                request.getRequestDispatcher("WEB-INF/connection.jsp").forward(request, response);
+            } else {
 
                 request.getSession().setAttribute("user", user);
-                request.getRequestDispatcher("WEB-INF/home.jsp" ).forward(request, response);
+                request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
             }
         } catch (BLLException | DALException | SQLException e) {
             e.printStackTrace();

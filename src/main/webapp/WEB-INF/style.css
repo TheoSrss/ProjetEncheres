@@ -1,0 +1,25 @@
+form{
+    padding: 20px;
+    text-align: center;
+}
+.container{
+    width: 100%;
+    left: 50%;
+    top: 100px;
+    transform: translate(-50%);
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+.form-group{
+    position: relative;
+    max-width: 400px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.btn-info {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
