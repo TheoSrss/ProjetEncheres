@@ -51,15 +51,17 @@ public class ServeltsUpdateUser extends HttpServlet {
                         request.getParameter("password"),
                         userSession.getCredit(), userSession.isAdmin()
                 );
-
                 String canCreate=userManager.checkIfUserCanBeCreate(user);
-                if(canCreate==null){
+
+                boolean usernameCheck=userManager.checkUsernameIsCorrect(user.getUsername());
+                if(canCreate==null && usernameCheck) {
                     userManager.updateUser(user);
                     request.getSession().setAttribute("user", user);
+                }else if(!usernameCheck){
+                    request.setAttribute("error", " Veuillez utiliser un pseudo seulement avec des caractères alphanumérique");
                 }else{
                     request.setAttribute("error", canCreate+" déjà utilisé sur le site, veuillez en utiliser un autre.");
                 }
-
             }else{
                 request.setAttribute("error", "Confimation de mot de passe non identique");
             }

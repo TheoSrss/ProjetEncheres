@@ -68,4 +68,8 @@ public class UserManager {
         }
         return null;
     }
+
+    public boolean checkUsernameIsCorrect(String username){
+        return username.matches("^[a-zA-Z0-9]*$");
+    }
 }
