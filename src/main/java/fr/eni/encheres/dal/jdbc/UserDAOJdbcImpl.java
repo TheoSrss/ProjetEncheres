@@ -142,8 +142,6 @@ public class UserDAOJdbcImpl implements UserDAO {
     @Override
     public void updateUser(User user) throws DALException {
         try {
-            System.out.println("good");
-            System.out.println(user.getId());
             con = ConnectionProvider.getConnection();
 
             stmt = con.prepareStatement("UPDATE user SET username =?,surname=?,firstName=?,email=?,phone=?,street=?,postalCode=?,city=?,password=?WHERE id=?");
@@ -161,6 +159,43 @@ public class UserDAOJdbcImpl implements UserDAO {
             stmt.executeUpdate();
             con.close();
 
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+    }
+
+    public User getUserByEmailAndUsername(User user) throws DALException {
+        try {
+            User userReturn = null;
+            con = ConnectionProvider.getConnection();
+            System.out.println(user.getId());
+            stmt = con.prepareStatement("SELECT * FROM USER WHERE username=? OR email=? AND id <> ?");
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setInt(3, user.getId());
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                if (resultSet.getInt("id") != user.getId()) {
+                    userReturn = new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("surname"),
+                            resultSet.getString("firstName"),
+                            resultSet.getString("email"),
+                            resultSet.getInt("phone"),
+                            resultSet.getString("street"),
+                            resultSet.getInt("postalCode"),
+                            resultSet.getString("city"),
+                            resultSet.getString("password"),
+                            resultSet.getInt("credit"),
+                            resultSet.getBoolean("admin")
+                    );
+                    return userReturn;
+                }
+            }
+            return null;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }

@@ -37,6 +37,9 @@
     <c:if test="${sessionScope.user != null }">
         <span>Vous êtes déjà inscrit sur la platforme</span>
     </c:if>
+    <c:if test="${error != null }">
+        ${error}
+    </c:if>
 </head>
 <body>
 

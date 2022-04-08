@@ -6,6 +6,7 @@ import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UserDAO;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UserManager {
     private static UserManager userManager;
@@ -23,25 +24,27 @@ public class UserManager {
     }
 
     public static User connexionIsGood(String login, String password) throws BLLException, DALException, SQLException {
-        return userDAO.selectWithloginAndPassword(login,password);
+        return userDAO.selectWithloginAndPassword(login, password);
     }
 
     public User registration(User user) throws BLLException, DALException {
         try {
-            User userReturn=userDAO.insert(user);
+            User userReturn = userDAO.insert(user);
             return userReturn;
 
-        }catch (DALException e) {
-            throw new BLLException("BLL "+ e);
+        } catch (DALException e) {
+            throw new BLLException("BLL " + e);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
     public User getUserById(int id) throws BLLException, DALException, SQLException {
 
         return userDAO.getUserById(id);
     }
+
     public void deleteUser(int id) throws BLLException, DALException, SQLException {
 
         userDAO.deleteUser(id);
@@ -49,5 +52,20 @@ public class UserManager {
 
     public void updateUser(User user) throws DALException {
         userDAO.updateUser(user);
+    }
+
+    public String checkIfUserCanBeCreate(User user) throws DALException {
+        User userReturn = userDAO.getUserByEmailAndUsername(user);
+
+        if (userReturn != null) {
+            if (Objects.equals(user.getUsername(), userReturn.getUsername())) {
+                return "Pseudo";
+            } else if (Objects.equals(user.getEmail(), userReturn.getEmail())) {
+                return "Email";
+            }
+        } else {
+            return null;
+        }
+        return null;
     }
 }

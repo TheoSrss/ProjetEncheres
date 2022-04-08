@@ -32,7 +32,6 @@ public class ServeltsUpdateUser extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("servlets");
         User userSession = (User) request.getSession().getAttribute("user");
 
         try {
@@ -53,12 +52,15 @@ public class ServeltsUpdateUser extends HttpServlet {
                         userSession.getCredit(), userSession.isAdmin()
                 );
 
-                System.out.println(user.getPassword());
-                userManager.updateUser(user);
-                request.getSession().setAttribute("user", user);
+                String canCreate=userManager.checkIfUserCanBeCreate(user);
+                if(canCreate==null){
+                    userManager.updateUser(user);
+                    request.getSession().setAttribute("user", user);
+                }else{
+                    request.setAttribute("error", canCreate+" déjà utilisé sur le site, veuillez en utiliser un autre.");
+                }
+
             }else{
-                System.out.println("error mdp");
-                System.out.println(userSession.getId());
                 request.setAttribute("error", "Confimation de mot de passe non identique");
             }
             request.getRequestDispatcher("WEB-INF/updateUser.jsp").forward(request, response);

@@ -32,6 +32,8 @@ public class ServletsRegistration extends HttpServlet {
             String password = request.getParameter("password");
             String passwordCheck = request.getParameter("passwordCheck");
 
+
+
             if (Objects.equals(password, passwordCheck)) {
                 User user = new User(
                         request.getParameter("username"),
@@ -46,9 +48,17 @@ public class ServletsRegistration extends HttpServlet {
                         100, false
                 );
 
-                User userRegistration=userManager.registration(user);
-                request.getSession().setAttribute("user", userRegistration);
-                request.getRequestDispatcher("WEB-INF/home.jsp" ).forward(request, response);
+                String canCreate=userManager.checkIfUserCanBeCreate(user);
+
+                if(canCreate==null){
+                    User userRegistration=userManager.registration(user);
+                    request.getSession().setAttribute("user", userRegistration);
+                    request.getRequestDispatcher("WEB-INF/home.jsp" ).forward(request, response);
+                }else{
+                    request.setAttribute("error", canCreate+" déjà utilisé sur le site, veuillez en utiliser un autre.");
+                    request.getRequestDispatcher("WEB-INF/registration.jsp").forward(request, response);
+                }
+
             }
         } catch (BLLException e) {
             try {
