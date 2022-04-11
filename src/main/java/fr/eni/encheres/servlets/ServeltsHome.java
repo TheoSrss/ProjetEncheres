@@ -49,13 +49,17 @@ public class ServeltsHome extends HttpServlet {
         int idCat = -1;
         String nameArticle = null;
         try {
-            System.out.println(request.getParameter("category"));
-            if (!Objects.equals(request.getParameter("category"), "null")) {
+            if (!Objects.equals(request.getParameter("category"), null)) {
                 idCat = Integer.parseInt(request.getParameter("category"));
             }
-            if (!request.getParameter("name").equals("")) {
-                nameArticle = request.getParameter("name");
+            String name=request.getParameter("name");
+
+            if(name!=null){
+                if (!name.equals("")) {
+                    nameArticle = request.getParameter("name");
+                }
             }
+
 
             ArrayList<Article> allArticles = articleManager.getArticlesWithFilter(idCat, nameArticle);
             request.setAttribute("articles", allArticles);
@@ -65,8 +69,6 @@ public class ServeltsHome extends HttpServlet {
 
             request.setAttribute("catSelected", idCat);
             request.setAttribute("nameArticle", nameArticle);
-
-
             request.getRequestDispatcher("index.jsp").forward(request, response);
 
         } catch (DALException e) {
@@ -74,6 +76,7 @@ public class ServeltsHome extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 }

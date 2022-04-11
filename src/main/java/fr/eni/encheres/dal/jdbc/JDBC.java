@@ -26,8 +26,6 @@ public class JDBC {
                 categories.add(categories.size(), (Category) resultSet);
 
             }
-            System.out.println(categories);
-//            return categories;
 
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);

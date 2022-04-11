@@ -25,24 +25,23 @@ public class ServletsProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String idUser = request.getParameter("idUser");
-        User user = null;
+        User user ;
 
         if (idUser != null) {
             try {
                 user = userManager.getUserById(Integer.parseInt(idUser));
                 if (user == null) {
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    getServletContext().getRequestDispatcher("/home").forward(request, response);
                 } else {
                     request.setAttribute("profileUser", user);
 
                     request.getRequestDispatcher("WEB-INF/profile.jsp").forward(request, response);
-                    return ;
                 }
             } catch (BLLException | DALException | SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home").forward(request, response);
         }
     }
 

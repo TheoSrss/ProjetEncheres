@@ -51,7 +51,7 @@ public class ServletsRegistration extends HttpServlet {
                 if(canCreate==null){
                     User userRegistration=userManager.registration(user);
                     request.getSession().setAttribute("user", userRegistration);
-                    request.getRequestDispatcher("index.jsp" ).forward(request, response);
+                    getServletContext().getRequestDispatcher("/home").forward(request, response);
                 }else{
                     request.setAttribute("error", canCreate+" déjà utilisé sur le site, veuillez en utiliser un autre.");
                     request.getRequestDispatcher("WEB-INF/registration.jsp").forward(request, response);

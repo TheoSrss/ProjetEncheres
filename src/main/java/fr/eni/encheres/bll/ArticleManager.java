@@ -59,4 +59,9 @@ public class ArticleManager {
         }
         return articles;
     }
+
+    public Article getArticleById(int i) throws DALException, SQLException {
+
+        return articleDao.getArticleById( i);
+    }
 }

@@ -9,9 +9,6 @@ import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.DALException;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ArticleDAOJdbcImpl implements ArticleDao {
@@ -51,6 +48,65 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
+    }
+
+    @Override
+    public Article getArticleById(int id) throws DALException, SQLException {
+        try {
+            con = ConnectionProvider.getConnection();
+            stmt = con.prepareStatement("SELECT * FROM ARTICLESOLD  as a INNER JOIN USER as u ON u.id=a.idUser INNER JOIN CATEGORY as c ON c.id=a.idCategory INNER JOIN WITHDRAWAL as w ON w.id=a.idWithdrawal WHERE a.id=?");
+
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+            int a = 0;
+
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("u.id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("phone"),
+                        resultSet.getString("u.street"),
+                        resultSet.getInt("u.postalCode"),
+                        resultSet.getString("u.city"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("credit"),
+                        resultSet.getBoolean("admin")
+
+                );
+                Withdrawal withdrawal = new Withdrawal(
+                        resultSet.getInt("w.id"),
+                        resultSet.getString("w.street"),
+                        resultSet.getInt("w.postalCode"),
+                        resultSet.getString("w.city")
+                );
+                Category category = new Category(
+                        resultSet.getInt("c.id"),
+                        resultSet.getString("c.libelle")
+                );
+
+                Article article = new Article(
+                        resultSet.getInt("a.id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getDate("dateStartBid"),
+                        resultSet.getDate("dateEndBid"),
+                        resultSet.getInt("initialPrice"),
+                        resultSet.getInt("soldPrice"),
+                        resultSet.getString("stateSale"),
+                        user,
+                        category,
+                        withdrawal
+                );
+                return article;
+            }
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+        return null;
     }
 
     @Override

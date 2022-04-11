@@ -168,7 +168,6 @@ public class UserDAOJdbcImpl implements UserDAO {
         try {
             User userReturn = null;
             con = ConnectionProvider.getConnection();
-            System.out.println(user.getId());
             stmt = con.prepareStatement("SELECT * FROM USER WHERE username=? OR email=? AND id <> ?");
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());

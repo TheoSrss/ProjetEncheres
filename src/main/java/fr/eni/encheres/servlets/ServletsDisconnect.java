@@ -12,6 +12,6 @@ public class ServletsDisconnect extends HttpServlet {
         request.getSession().setAttribute("user", null);
 
         request.getSession().removeAttribute("user");
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/home").forward(request, response);
     }
 }

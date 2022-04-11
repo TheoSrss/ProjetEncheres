@@ -72,6 +72,7 @@ public class ServletsCreateArticle extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
 
             }else {
+
                 Withdrawal withdrawal = new Withdrawal(
                         request.getParameter("street"),
                         Integer.parseInt(request.getParameter("postalCode")),
@@ -98,12 +99,11 @@ public class ServletsCreateArticle extends HttpServlet {
                         categoryManager.getById(Integer.parseInt(request.getParameter("category"))),
                         address
                 );
-
                 articleManager.addArticles(article);
 
                 request.setAttribute("success", "Article mis en ligne");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
 
+                getServletContext().getRequestDispatcher("/home").forward(request, response);
             }
         } catch (DALException e) {
             e.printStackTrace();

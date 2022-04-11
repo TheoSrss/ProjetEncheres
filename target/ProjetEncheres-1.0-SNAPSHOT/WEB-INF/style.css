@@ -69,3 +69,9 @@ form {
     justify-content: space-evenly;
     width: 100%;
 }
+
+.hrefArticle{
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}

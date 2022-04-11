@@ -35,6 +35,6 @@ public class ServeltsDeleteUser extends HttpServlet {
         } catch (BLLException e) {
             e.printStackTrace();
         }
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/home").forward(request, response);
     }
 }

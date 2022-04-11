@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface ArticleDao {
 
     public Article insert(Article a) throws DALException, SQLException;
+    public Article getArticleById(int id) throws DALException, SQLException;
 
     public ArrayList<Article> getAllArticles() throws DALException, SQLException;
 }

@@ -43,7 +43,7 @@ public class ServletsConnection extends HttpServlet {
             } else {
 
                 request.getSession().setAttribute("user", user);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/home").forward(request, response);
             }
         } catch (BLLException | DALException | SQLException e) {
             e.printStackTrace();
