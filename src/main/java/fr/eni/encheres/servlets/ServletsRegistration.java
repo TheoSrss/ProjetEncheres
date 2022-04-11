@@ -22,9 +22,7 @@ public class ServletsRegistration extends HttpServlet {
         super.init();
     }
     protected void doGet(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
         request.getRequestDispatcher("WEB-INF/registration.jsp").forward(request, response);
-
     }
 
     protected void doPost(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {

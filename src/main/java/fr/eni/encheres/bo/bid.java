@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class bid {
     private User user;
-    private articleSold articleSold;
+    private Article articleSold;
     private Date date;
     private float amount;
 
-    public bid(User user, fr.eni.encheres.bo.articleSold articleSold, Date date, float amount) {
+    public bid(User user, Article articleSold, Date date, float amount) {
         this.user = user;
         this.articleSold = articleSold;
         this.date = date;
@@ -23,11 +23,11 @@ public class bid {
         this.user = user;
     }
 
-    public fr.eni.encheres.bo.articleSold getArticleSold() {
+    public Article getArticleSold() {
         return articleSold;
     }
 
-    public void setArticleSold(fr.eni.encheres.bo.articleSold articleSold) {
+    public void setArticleSold(Article articleSold) {
         this.articleSold = articleSold;
     }
 

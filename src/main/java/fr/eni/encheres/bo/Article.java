@@ -2,7 +2,7 @@ package fr.eni.encheres.bo;
 
 import java.util.Date;
 
-public class articleSold {
+public class Article {
     private int id;
     private String name;
     private String description;
@@ -15,7 +15,7 @@ public class articleSold {
     private Category category;
     private Withdrawal withdrawal;
 
-    public articleSold(int id, String name, String description, Date dateStartBid, Date dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
+    public Article(int id, String name, String description, Date dateStartBid, Date dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
         this.id = id;
         this.name = name;
         this.description = description;
