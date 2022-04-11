@@ -66,7 +66,6 @@ public class ServletsCreateArticle extends HttpServlet {
                     request.getParameter("postalCode").equals("") ||
                     request.getParameter("city").equals("")
             ){
-                System.out.println("errorinput");
                 ArrayList<Category> categories = categoryManager.getAllCategory();
                 request.setAttribute("categories", categories);
                 request.setAttribute("error", "Veuillez remplir tous les champs");
@@ -75,7 +74,7 @@ public class ServletsCreateArticle extends HttpServlet {
             }else {
                 Withdrawal withdrawal = new Withdrawal(
                         request.getParameter("street"),
-                        request.getParameter("postalCode"),
+                        Integer.parseInt(request.getParameter("postalCode")),
                         request.getParameter("city")
                 );
                 Withdrawal address = withDrawalManager.addAddress(withdrawal);
@@ -85,7 +84,7 @@ public class ServletsCreateArticle extends HttpServlet {
                 String dateStartBid = request.getParameter("dateStartBid");
                 Date dateStart = (Date) formatter.parse(dateStartBid);
                 String dateEndBid = request.getParameter("dateEndBid");
-                Date dateEnd = (Date) formatter.parse(dateStartBid);
+                Date dateEnd = (Date) formatter.parse(dateEndBid);
 
                 Article article = new Article(
                         request.getParameter("name"),

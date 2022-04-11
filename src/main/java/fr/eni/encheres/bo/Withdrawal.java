@@ -3,11 +3,18 @@ package fr.eni.encheres.bo;
 public class Withdrawal {
     private int id;
     private String street;
-    private String postalCode;
+    private int postalCode;
     private String city;
 
-    public Withdrawal(String street, String postalCode, String city) {
+    public Withdrawal(String street, int postalCode, String city) {
 //        this.id = id;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+    }
+
+    public Withdrawal(int id, String street, int postalCode, String city) {
+        this.id = id;
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;
@@ -29,11 +36,11 @@ public class Withdrawal {
         this.street = street;
     }
 
-    public String getPostalCode() {
+    public int getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
 

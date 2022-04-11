@@ -18,7 +18,7 @@ public class WithdrawalJdbcImpl implements WithDrawalDAO {
             stmt = con.prepareStatement("INSERT INTO WITHDRAWAL VALUES (?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, null);
             stmt.setString(2,w.getStreet());
-            stmt.setString(3, w.getPostalCode());
+            stmt.setInt(3, w.getPostalCode());
             stmt.setString(4, w.getCity());
 
             int nb = stmt.executeUpdate();

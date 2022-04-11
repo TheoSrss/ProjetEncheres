@@ -35,7 +35,7 @@
             <input type="text" id="description" name="description" class="form-control">
         </div>
         <div class="form-group">
-            <label class="form-label" for="description">Categories :</label>
+            <label class="form-label" for="category">Categories :</label>
             <select id="category" name="category" class="form-control">
                 <c:forEach var="cat" items="${categories}">
                     <option value="${cat.id}">${cat.wording}</option>

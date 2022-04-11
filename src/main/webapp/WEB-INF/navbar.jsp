@@ -18,6 +18,7 @@
     <style rel="stylesheet">
         <%@include file="style.css" %>
     </style>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--%>
 
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

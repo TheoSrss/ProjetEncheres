@@ -59,3 +59,13 @@ form {
     left: 50%;
     transform: translate(-50%);
 }
+.card{
+    max-width: 400px;
+    text-align: center;
+}
+.containerArticles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+}

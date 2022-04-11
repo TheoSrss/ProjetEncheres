@@ -29,6 +29,19 @@ public class Article {
         this.category = category;
         this.withdrawal = withdrawal;
     }
+    public Article(int id, String name, String description, Date dateStartBid, Date dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dateStartBid = dateStartBid;
+        this.dateEndBid = dateEndBid;
+        this.initialPrice = initialPrice;
+        this.soldPrice = soldPrice;
+        this.stateSale = stateSale;
+        this.user = user;
+        this.category = category;
+        this.withdrawal = withdrawal;
+    }
 
     public int getId() {
         return id;

@@ -6,6 +6,7 @@ import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ArticleManager {
     private static ArticleManager articleManager;
@@ -24,5 +25,38 @@ public class ArticleManager {
 
     public Article addArticles(Article a) throws DALException, SQLException {
         return articleDao.insert(a);
+    }
+
+    public ArrayList<Article> getAllArticles() throws DALException, SQLException {
+        return articleDao.getAllArticles();
+    }
+
+    public ArrayList<Article> getArticlesWithFilter(int idCat, String name) throws DALException, SQLException {
+
+        ArrayList<Article> articles = getAllArticles();
+
+        if (idCat != -1) {
+            ArrayList<Article> articlesForCat = new ArrayList<Article>();
+            int nb = 0;
+            for (Article a : articles) {
+                if (a.getCategory().getId() == idCat) {
+                    articlesForCat.add(nb, a);
+                    nb++;
+                }
+            }
+            articles = articlesForCat;
+        }
+        if (name != null) {
+            ArrayList<Article> articlesForName = new ArrayList<Article>();
+            int nbN = 0;
+            for (Article a : articles) {
+                if (a.getName().contains(name)) {
+                    articlesForName.add(nbN, a);
+                    nbN++;
+                }
+            }
+            articles = articlesForName;
+        }
+        return articles;
     }
 }
