@@ -55,37 +55,57 @@ public class ServletsCreateArticle extends HttpServlet {
         try {
             User userSession = (User) request.getSession().getAttribute("user");
 
-            Withdrawal withdrawal = new Withdrawal(
-                    request.getParameter("street"),
-                    request.getParameter("postalCode"),
-                    request.getParameter("city")
-            );
-            Withdrawal address = withDrawalManager.addAddress(withdrawal);
+            //checkIfInputIsEmpty
+            if (request.getParameter("name").equals("") ||
+                    request.getParameter("description").equals("") ||
+                    request.getParameter("category").equals("") ||
+                    request.getParameter("dateStartBid").equals("") ||
+                    request.getParameter("dateEndBid").equals("") ||
+                    request.getParameter("initialPrice").equals("") ||
+                    request.getParameter("street").equals("") ||
+                    request.getParameter("postalCode").equals("") ||
+                    request.getParameter("city").equals("")
+            ){
+                System.out.println("errorinput");
+                ArrayList<Category> categories = categoryManager.getAllCategory();
+                request.setAttribute("categories", categories);
+                request.setAttribute("error", "Veuillez remplir tous les champs");
+                request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
 
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+            }else {
+                Withdrawal withdrawal = new Withdrawal(
+                        request.getParameter("street"),
+                        request.getParameter("postalCode"),
+                        request.getParameter("city")
+                );
+                Withdrawal address = withDrawalManager.addAddress(withdrawal);
 
-            String dateStartBid = request.getParameter("dateStartBid");
-            Date dateStart = (Date) formatter.parse(dateStartBid);
-            String dateEndBid = request.getParameter("dateEndBid");
-            Date dateEnd = (Date) formatter.parse(dateStartBid);
-//                    categoryManager.getAllCategory().get(),
+                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
+                String dateStartBid = request.getParameter("dateStartBid");
+                Date dateStart = (Date) formatter.parse(dateStartBid);
+                String dateEndBid = request.getParameter("dateEndBid");
+                Date dateEnd = (Date) formatter.parse(dateStartBid);
 
-            Article article = new Article(
-                    request.getParameter("name"),
-                    request.getParameter("description"),
-                    dateStart,
-                    dateEnd,
-                    Integer.parseInt(request.getParameter("initialPrice")),
-                    -1,
-                    "TO_SALE",
-                    userSession,
-                    categoryManager.getById(Integer.parseInt(request.getParameter("category"))),
-                    address
-            );
+                Article article = new Article(
+                        request.getParameter("name"),
+                        request.getParameter("description"),
+                        dateStart,
+                        dateEnd,
+                        Integer.parseInt(request.getParameter("initialPrice")),
+                        -1,
+                        "TO_SALE",
+                        userSession,
+                        categoryManager.getById(Integer.parseInt(request.getParameter("category"))),
+                        address
+                );
 
-            articleManager.addArticles(article);
+                articleManager.addArticles(article);
 
+                request.setAttribute("success", "Article mis en ligne");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+
+            }
         } catch (DALException e) {
             e.printStackTrace();
         } catch (SQLException e) {

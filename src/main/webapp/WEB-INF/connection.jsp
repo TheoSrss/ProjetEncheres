@@ -33,8 +33,4 @@
 </div>
 </body>
 </html>
-<script>
-    $(document).ready(function () {
-        $('.toast').toast('show');
-    });
-</script>
+

@@ -18,6 +18,7 @@
     <style rel="stylesheet">
         <%@include file="style.css" %>
     </style>
+
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="home">ENI Encheres</a>
@@ -41,3 +42,9 @@
         </ul>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+</script>
