@@ -15,6 +15,14 @@
             <input type="text" id="description" name="description" class="form-control">
         </div>
         <div class="form-group">
+            <label class="form-label" for="description">Categories :</label>
+            <select id="category" name="category" class="form-control">
+                <c:forEach var="cat" items="${categories}">
+                    <option value="${cat.id}">${cat.wording}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-label" for="dateStartBid">Date de début :</label>
             <input type="datetime-local" id="dateStartBid" name="dateStartBid" class="form-control">
         </div>
@@ -24,9 +32,25 @@
         </div>
         <div class="form-group">
             <label class="form-label" for="initialPrice">Prix de départ :</label>
-            <input type="text" id="initialPrice" name="initialPrice" class="form-control">
+            <input type="number" id="initialPrice" name="initialPrice" class="form-control">
         </div>
-        <input type="submit" value="Créer" class="btn btn-primary">
+        <div class="containerAddressDefault">
+            <h5>Modalités de retrait</h5>
+            <div class="form-group">
+                <label class="form-label" for="street">Rue :</label>
+                <input type="text" id="street" name="street" class="form-control" value="${sessionScope.user.street}">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="postalCode">Code postal :</label>
+                <input type="text" id="postalCode" name="postalCode" class="form-control"
+                       value="${sessionScope.user.postalCode}">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="city">Ville :</label>
+                <input type="text" id="city" name="city" class="form-control" value="${sessionScope.user.city}">
+            </div>
+        </div>
+        <input style="margin-top: 20px" type="submit" value="Créer" class="btn btn-primary">
     </form>
 </div>
 </body>

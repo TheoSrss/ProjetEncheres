@@ -7,6 +7,6 @@ import java.sql.SQLException;
 
 public interface ArticleDao {
 
-    public Article insert(User user) throws DALException, SQLException;
+    public Article insert(Article a) throws DALException, SQLException;
 
 }

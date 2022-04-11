@@ -7,7 +7,6 @@ import fr.eni.encheres.dal.DAOFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryManager {
     private static CategoryManager categoryManager;
@@ -25,7 +24,10 @@ public class CategoryManager {
     }
 
     public ArrayList<Category> getAllCategory() throws DALException, SQLException {
-
         return categoryDAO.getAllCategory();
+    }
+
+    public Category getById(int id) throws DALException, SQLException {
+        return categoryDAO.getByID(id);
     }
 }

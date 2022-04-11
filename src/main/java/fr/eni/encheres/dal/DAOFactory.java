@@ -3,24 +3,22 @@ package fr.eni.encheres.dal;
 import fr.eni.encheres.dal.jdbc.ArticleDAOJdbcImpl;
 import fr.eni.encheres.dal.jdbc.CategoryDAOJdbcImpl;
 import fr.eni.encheres.dal.jdbc.UserDAOJdbcImpl;
+import fr.eni.encheres.dal.jdbc.WithdrawalJdbcImpl;
 
 public class DAOFactory {
-
-
     public static UserDAO getUserDao() {
-        UserDAO userDAO = new UserDAOJdbcImpl();
 
-        return userDAO;
+        return new UserDAOJdbcImpl();
     }
     public static ArticleDao getArticleDao() {
-        ArticleDao articleDao =  new ArticleDAOJdbcImpl();
 
-        return articleDao;
+        return new ArticleDAOJdbcImpl();
     }
     public static CategoryDao getCategoryDao() {
-        CategoryDao categoryDao =  new CategoryDAOJdbcImpl();
-
-        return categoryDao;
+        return new CategoryDAOJdbcImpl();
+    }
+    public static WithdrawalJdbcImpl getWithDrawalDao() {
+        return new WithdrawalJdbcImpl();
     }
 
 }
