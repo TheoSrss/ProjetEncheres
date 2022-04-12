@@ -37,6 +37,7 @@
             <li class="list-group-item">Aucune offre pour cet article</li>
         </c:if>
         <li class="list-group-item">Mise a prix: ${article.initialPrice}</li>
+        <li class="list-group-item">Début de l'enchère: ${article.dateStartBid}</li>
         <li class="list-group-item">Fin de l'enchère: ${article.dateEndBid}</li>
         <li class="list-group-item">Retrait: ${article.withdrawal.city}</li>
         <li class="list-group-item">Vendeur: ${article.user.username}</li>
@@ -50,6 +51,13 @@
                     </div>
                     <input style="margin-top: 20px" type="submit" value="Enchérir" class="btn btn-primary">
                 </form>
+            </c:if>
+            <c:if test="${article.user.id eq sessionScope.user.id }">
+                <c:if test="${canUpdateArticle}">
+                    <a href="updateArticle?idArticle=${article.id}">
+                        <button class="btn btn-primary"> Modifier l'article</button>
+                    </a>
+                </c:if>
             </c:if>
         </c:if>
     </ul>

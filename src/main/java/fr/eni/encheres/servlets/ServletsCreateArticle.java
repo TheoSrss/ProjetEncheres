@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -84,9 +86,9 @@ public class ServletsCreateArticle extends HttpServlet {
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
                 String dateStartBid = request.getParameter("dateStartBid");
-                Date dateStart = (Date) formatter.parse(dateStartBid);
+                LocalDateTime dateStart = LocalDateTime.parse(dateStartBid);
                 String dateEndBid = request.getParameter("dateEndBid");
-                Date dateEnd = (Date) formatter.parse(dateEndBid);
+                LocalDateTime dateEnd = LocalDateTime.parse(dateEndBid);
 
                 Article article = new Article(
                         request.getParameter("name"),
@@ -108,11 +110,7 @@ public class ServletsCreateArticle extends HttpServlet {
                 request.setAttribute("nameArticle", null);
                 getServletContext().getRequestDispatcher("/home").forward(request, response);
             }
-        } catch (DALException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (DALException | SQLException e) {
             e.printStackTrace();
         }
     }

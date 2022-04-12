@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @WebServlet("/article")
@@ -45,7 +46,13 @@ public class ServletsArticle extends HttpServlet {
                         b.setArticleSold(a);
                         min = b.getAmount();
                     }
+                    boolean canUpdateArticle = true;
 
+                    if (a.getDateStartBid().isAfter(LocalDateTime.now())) {
+                        canUpdateArticle = false;
+                    }
+
+                    request.setAttribute("canUpdateArticle", canUpdateArticle);
                     request.setAttribute("article", a);
                     request.setAttribute("bid", b);
                     request.setAttribute("min", min + 1);
@@ -86,6 +93,13 @@ public class ServletsArticle extends HttpServlet {
                     UserManager.updateCreditUser(price, user.getId());
                     float firstPrice = user.getCredit();
                     ((User) request.getSession().getAttribute("user")).setCredit(firstPrice - price);
+
+                    boolean canUpdateArticle = true;
+
+                    if (article.getDateStartBid().isAfter(LocalDateTime.now())) {
+                        canUpdateArticle = false;
+                    }
+                    request.setAttribute("canUpdateArticle", canUpdateArticle);
 
                     request.setAttribute("article", article);
                     request.setAttribute("bid", bid);

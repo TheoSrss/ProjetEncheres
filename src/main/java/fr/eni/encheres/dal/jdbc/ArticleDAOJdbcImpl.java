@@ -9,6 +9,9 @@ import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.DALException;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ArticleDAOJdbcImpl implements ArticleDao {
@@ -21,12 +24,15 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
         try {
             con = ConnectionProvider.getConnection();
             stmt = con.prepareStatement("INSERT INTO ARTICLESOLD VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+//            System.out.println(a.getDateStartBid());
+
 
             stmt.setString(1, null);
             stmt.setString(2, a.getName());
             stmt.setString(3, a.getDescription());
-            stmt.setDate(4, new Date(a.getDateStartBid().getTime()));
-            stmt.setDate(5, new Date(a.getDateEndBid().getTime()));
+            stmt.setString(4, a.getDateStartBid().toString());
+            stmt.setString(5, a.getDateEndBid().toString());
+//            stmt.setDate(5, Date.valueOf("2021-01-01 15:12:10.1"));
             stmt.setFloat(6, a.getInitialPrice());
             stmt.setFloat(7, a.getSoldPrice());
             stmt.setString(8, a.getStateSale());
@@ -87,13 +93,15 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
                         resultSet.getInt("c.id"),
                         resultSet.getString("c.libelle")
                 );
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
                 Article article = new Article(
                         resultSet.getInt("a.id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
-                        resultSet.getDate("dateStartBid"),
-                        resultSet.getDate("dateEndBid"),
+                        LocalDateTime.parse(resultSet.getString("dateStartBid"), formatter),
+                        LocalDateTime.parse(resultSet.getString("dateEndBid"), formatter),
+
                         resultSet.getInt("initialPrice"),
                         resultSet.getInt("soldPrice"),
                         resultSet.getString("stateSale"),
@@ -150,12 +158,14 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
                         resultSet.getString("c.libelle")
                 );
 
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
                 Article article = new Article(
                         resultSet.getInt("a.id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
-                        resultSet.getDate("dateStartBid"),
-                        resultSet.getDate("dateEndBid"),
+                        LocalDateTime.parse(resultSet.getString("dateStartBid"), formatter),
+                        LocalDateTime.parse(resultSet.getString("dateEndBid"), formatter),
                         resultSet.getInt("initialPrice"),
                         resultSet.getInt("soldPrice"),
                         resultSet.getString("stateSale"),

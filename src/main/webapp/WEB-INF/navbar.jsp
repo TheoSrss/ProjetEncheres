@@ -34,7 +34,6 @@
                     connecter</a></li>
             </c:if>
             <c:if test="${sessionScope.user != null }">
-                <li class="nav-item active"><a class="nav-link">Encheres</a></li>
                 <li class="nav-item active"><a class="nav-link" href="createArticle">Vendre un article</a></li>
                 <li class="nav-item active"><a class="nav-link" href="profile?idUser=${sessionScope.user.id}">Mon
                     profil</a></li>

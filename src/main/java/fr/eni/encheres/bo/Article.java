@@ -1,13 +1,13 @@
 package fr.eni.encheres.bo;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Article {
     private int id;
     private String name;
     private String description;
-    private Date dateStartBid;
-    private Date dateEndBid;
+    private LocalDateTime dateStartBid;
+    private LocalDateTime dateEndBid;
     private float initialPrice;
     private float soldPrice;
     private String stateSale;
@@ -16,7 +16,7 @@ public class Article {
     private Withdrawal withdrawal;
 
 
-    public Article( String name, String description, Date dateStartBid, Date dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
+    public Article( String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
 //        this.id = id;
         this.name = name;
         this.description = description;
@@ -29,7 +29,7 @@ public class Article {
         this.category = category;
         this.withdrawal = withdrawal;
     }
-    public Article(int id, String name, String description, Date dateStartBid, Date dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
+    public Article(int id, String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -67,19 +67,19 @@ public class Article {
         this.description = description;
     }
 
-    public Date getDateStartBid() {
+    public LocalDateTime getDateStartBid() {
         return dateStartBid;
     }
 
-    public void setDateStartBid(Date dateStartBid) {
+    public void setDateStartBid(LocalDateTime dateStartBid) {
         this.dateStartBid = dateStartBid;
     }
 
-    public Date getDateEndBid() {
+    public LocalDateTime getDateEndBid() {
         return dateEndBid;
     }
 
-    public void setDateEndBid(Date dateEndBid) {
+    public void setDateEndBid(LocalDateTime dateEndBid) {
         this.dateEndBid = dateEndBid;
     }
 
