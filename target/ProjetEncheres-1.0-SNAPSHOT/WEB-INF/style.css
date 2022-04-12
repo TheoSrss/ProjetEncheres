@@ -35,6 +35,7 @@ form {
 .mr-auto {
     color: #8e2f2f;
 }
+
 .mr-autoS {
     color: #37d015;
 }
@@ -59,19 +60,39 @@ form {
     left: 50%;
     transform: translate(-50%);
 }
-.card{
+
+.card {
+    margin: 15px;
     max-width: 400px;
     text-align: center;
 }
-.containerArticles{
+
+.containerArticles {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 100%;
 }
 
-.hrefArticle{
+.hrefArticle {
     width: 100%;
     position: absolute;
     height: 100%;
+}
+
+.usernameM {
+    display: none;
+}
+
+.usernameD {
+    display: block;
+}
+
+@media screen and (max-width: 991px) {
+    .usernameD {
+        display: none;
+    }
+    .usernameM {
+        display: block;
+    }
 }
