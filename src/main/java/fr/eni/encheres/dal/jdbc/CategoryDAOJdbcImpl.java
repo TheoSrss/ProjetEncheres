@@ -37,9 +37,10 @@ public class CategoryDAOJdbcImpl implements CategoryDao {
                         resultSet.getInt("id"),
                         resultSet.getString("libelle")
                 );
+                con.close();
                 return cat;
             }
-
+            con.close();
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
@@ -65,6 +66,7 @@ public class CategoryDAOJdbcImpl implements CategoryDao {
                 categories.add(a, cat);
                 a++;
             }
+            con.close();
             return categories;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);

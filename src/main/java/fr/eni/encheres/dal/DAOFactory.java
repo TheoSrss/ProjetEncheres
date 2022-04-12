@@ -1,9 +1,6 @@
 package fr.eni.encheres.dal;
 
-import fr.eni.encheres.dal.jdbc.ArticleDAOJdbcImpl;
-import fr.eni.encheres.dal.jdbc.CategoryDAOJdbcImpl;
-import fr.eni.encheres.dal.jdbc.UserDAOJdbcImpl;
-import fr.eni.encheres.dal.jdbc.WithdrawalJdbcImpl;
+import fr.eni.encheres.dal.jdbc.*;
 
 public class DAOFactory {
     public static UserDAO getUserDao() {
@@ -19,6 +16,9 @@ public class DAOFactory {
     }
     public static WithdrawalJdbcImpl getWithDrawalDao() {
         return new WithdrawalJdbcImpl();
+    }
+    public static BidJdbcImpl getBidDao() {
+        return new BidJdbcImpl();
     }
 
 }

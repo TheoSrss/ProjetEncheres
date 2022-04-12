@@ -2,13 +2,14 @@ package fr.eni.encheres.bo;
 
 import java.util.Date;
 
-public class bid {
+public class Bid {
+    private int id;
     private User user;
     private Article articleSold;
     private Date date;
     private float amount;
 
-    public bid(User user, Article articleSold, Date date, float amount) {
+    public Bid(User user, Article articleSold, Date date, float amount) {
         this.user = user;
         this.articleSold = articleSold;
         this.date = date;

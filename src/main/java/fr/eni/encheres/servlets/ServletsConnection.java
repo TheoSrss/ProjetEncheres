@@ -38,17 +38,15 @@ public class ServletsConnection extends HttpServlet {
 
             if (user == null) {
                 request.setAttribute("error", "Identifiant et/ou mot de passe incorrect");
-
                 request.getRequestDispatcher("WEB-INF/connection.jsp").forward(request, response);
             } else {
-
                 request.getSession().setAttribute("user", user);
+                request.setAttribute("catSelected", -1);
+                request.setAttribute("nameArticle", null);
                 getServletContext().getRequestDispatcher("/home").forward(request, response);
             }
         } catch (BLLException | DALException | SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 }

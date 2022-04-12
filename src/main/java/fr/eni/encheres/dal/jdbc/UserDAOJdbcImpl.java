@@ -39,7 +39,7 @@ public class UserDAOJdbcImpl implements UserDAO {
                         resultSet.getInt("postalCode"),
                         resultSet.getString("city"),
                         resultSet.getString("password"),
-                        resultSet.getInt("credit"),
+                        resultSet.getFloat("credit"),
                         resultSet.getBoolean("admin")
 
                 );
@@ -69,7 +69,7 @@ public class UserDAOJdbcImpl implements UserDAO {
             stmt.setInt(8, user.getPostalCode());
             stmt.setString(9, user.getCity());
             stmt.setString(10, user.getPassword());
-            stmt.setDouble(11, user.getCredit());
+            stmt.setFloat(11, user.getCredit());
             stmt.setBoolean(12, user.isAdmin());
 
             int nb = stmt.executeUpdate();
@@ -110,7 +110,7 @@ public class UserDAOJdbcImpl implements UserDAO {
                         resultSet.getInt("postalCode"),
                         resultSet.getString("city"),
                         resultSet.getString("password"),
-                        resultSet.getInt("credit"),
+                        resultSet.getFloat("credit"),
                         resultSet.getBoolean("admin")
                 );
             }
@@ -188,15 +188,35 @@ public class UserDAOJdbcImpl implements UserDAO {
                             resultSet.getInt("postalCode"),
                             resultSet.getString("city"),
                             resultSet.getString("password"),
-                            resultSet.getInt("credit"),
+                            resultSet.getFloat("credit"),
                             resultSet.getBoolean("admin")
                     );
                     return userReturn;
                 }
             }
+            con.close();
             return null;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
+    }
+
+    @Override
+    public User updateCredit(float price, int id) throws DALException {
+        try {
+            con = ConnectionProvider.getConnection();
+
+            stmt = con.prepareStatement("UPDATE user SET credit=credit-? WHERE id=?", Statement.RETURN_GENERATED_KEYS);
+            stmt.setFloat(1, price);
+            stmt.setInt(2, id);
+
+            stmt.executeUpdate();
+
+        } catch (
+                SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+        System.out.println("fin");
+        return null;
     }
 }

@@ -27,6 +27,10 @@ public class UserManager {
         return userDAO.selectWithloginAndPassword(login, password);
     }
 
+    public static User updateCreditUser(float price,int id) throws DALException {
+        return userDAO.updateCredit(price,id);
+    }
+
     public User registration(User user) throws BLLException, DALException {
         try {
             User userReturn = userDAO.insert(user);
@@ -69,7 +73,16 @@ public class UserManager {
         return null;
     }
 
-    public boolean checkUsernameIsCorrect(String username){
+    public boolean checkUsernameIsCorrect(String username) {
         return username.matches("^[a-zA-Z0-9]*$");
+    }
+
+    public boolean checkIfUserCanBid(float credit, float price) {
+
+        if (price > credit) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

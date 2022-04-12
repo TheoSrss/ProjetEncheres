@@ -50,7 +50,9 @@ public class ServeltsHome extends HttpServlet {
         String nameArticle = null;
         try {
             if (!Objects.equals(request.getParameter("category"), null)) {
-                idCat = Integer.parseInt(request.getParameter("category"));
+                if(!Objects.equals(request.getParameter("category"), "null")){
+                    idCat = Integer.parseInt(request.getParameter("category"));
+                }
             }
             String name=request.getParameter("name");
 
@@ -59,8 +61,6 @@ public class ServeltsHome extends HttpServlet {
                     nameArticle = request.getParameter("name");
                 }
             }
-
-
             ArrayList<Article> allArticles = articleManager.getArticlesWithFilter(idCat, nameArticle);
             request.setAttribute("articles", allArticles);
 

@@ -11,7 +11,7 @@ public class User {
     private int postalCode;
     private String city;
     private String password;
-    private int credit;
+    private float credit;
     private boolean isAdmin;
     //    private List<Enchere> encheres;
 //    private List<Article> articles;
@@ -20,7 +20,7 @@ public class User {
         this.username = username;
         this.firstName = firstName;
     }
-    public User( String username, String surname, String firstName, String email, int phone, String street, int postalCode, String city, String password, int credit, boolean isAdmin) {
+    public User( String username, String surname, String firstName, String email, int phone, String street, int postalCode, String city, String password, float credit, boolean isAdmin) {
 //        this.id = id;
         this.username = username;
         this.surname = surname;
@@ -34,7 +34,7 @@ public class User {
         this.credit = credit;
         this.isAdmin = isAdmin;
     }
-    public User(int id, String username, String surname, String firstName, String email, int phone, String street, int postalCode, String city, String password, int credit, boolean isAdmin) {
+    public User(int id, String username, String surname, String firstName, String email, int phone, String street, int postalCode, String city, String password, float credit, boolean isAdmin) {
         this.id = id;
         this.username = username;
         this.surname = surname;
@@ -129,11 +129,11 @@ public class User {
         this.password = password;
     }
 
-    public int getCredit() {
+    public float getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(float credit) {
         this.credit = credit;
     }
 

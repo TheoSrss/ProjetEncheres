@@ -73,7 +73,7 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
                         resultSet.getInt("u.postalCode"),
                         resultSet.getString("u.city"),
                         resultSet.getString("password"),
-                        resultSet.getInt("credit"),
+                        resultSet.getFloat("credit"),
                         resultSet.getBoolean("admin")
 
                 );
@@ -101,6 +101,7 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
                         category,
                         withdrawal
                 );
+                con.close();
                 return article;
             }
         } catch (SQLException e) {
@@ -134,7 +135,7 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
                         resultSet.getInt("u.postalCode"),
                         resultSet.getString("u.city"),
                         resultSet.getString("password"),
-                        resultSet.getInt("credit"),
+                        resultSet.getFloat("credit"),
                         resultSet.getBoolean("admin")
 
                 );
@@ -165,7 +166,7 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
                 articles.add(a, article);
                 a++;
             }
-
+            con.close();
             return articles;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);

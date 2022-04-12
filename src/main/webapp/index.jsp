@@ -27,7 +27,6 @@
 </c:if>
 <form method="POST" action="home">
     <div class="form-group">
-        ${catSelected}
         <label class="form-label" for="category">Categories :</label>
         <select id="category" name="category" class="form-control">
             <option value="null">Toutes</option>

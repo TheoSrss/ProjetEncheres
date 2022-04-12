@@ -41,7 +41,16 @@
                 <li class="nav-item active"><a class="nav-link" href="disconnect">Déconnexion</a></li>
             </c:if>
         </ul>
+        <div class="usernameM">
+            <span class="float-left">${sessionScope.user.credit}</span>
+            <span  class="float-left ">${sessionScope.user.username}</span>
+        </div>
     </div>
+    <div class="usernameD">
+        <span style="margin-left: 10px" class="float-right">Credit :${sessionScope.user.credit}</span>
+        <span  class="float-right ">${sessionScope.user.username}</span>
+    </div>
+<%--    <span class="float-right usernameD">${sessionScope.user.username}</span>--%>
 </nav>
 
 <script>

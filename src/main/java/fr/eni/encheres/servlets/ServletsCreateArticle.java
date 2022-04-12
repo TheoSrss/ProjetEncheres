@@ -36,18 +36,19 @@ public class ServletsCreateArticle extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") == null) {
+            getServletContext().getRequestDispatcher("/home").forward(request, response);
+        } else {
+            try {
+                ArrayList<Category> categories = categoryManager.getAllCategory();
+                request.setAttribute("categories", categories);
 
+                request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
 
-        try {
-            ArrayList<Category> categories = categoryManager.getAllCategory();
-            request.setAttribute("categories", categories);
-
-            request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
-
-        } catch (DALException | SQLException e) {
-            e.printStackTrace();
+            } catch (DALException | SQLException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,13 +66,13 @@ public class ServletsCreateArticle extends HttpServlet {
                     request.getParameter("street").equals("") ||
                     request.getParameter("postalCode").equals("") ||
                     request.getParameter("city").equals("")
-            ){
+            ) {
                 ArrayList<Category> categories = categoryManager.getAllCategory();
                 request.setAttribute("categories", categories);
                 request.setAttribute("error", "Veuillez remplir tous les champs");
                 request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
 
-            }else {
+            } else {
 
                 Withdrawal withdrawal = new Withdrawal(
                         request.getParameter("street"),
@@ -103,6 +104,8 @@ public class ServletsCreateArticle extends HttpServlet {
 
                 request.setAttribute("success", "Article mis en ligne");
 
+                request.setAttribute("catSelected", -1);
+                request.setAttribute("nameArticle", null);
                 getServletContext().getRequestDispatcher("/home").forward(request, response);
             }
         } catch (DALException e) {

@@ -12,4 +12,6 @@ public interface UserDAO extends DAO<User>  {
     public void deleteUser(int id) throws DALException;
     public User getUserById(int id) throws DALException;
     public User getUserByEmailAndUsername(User user) throws DALException;
+
+    public User updateCredit(float price,int id) throws DALException;
 }
