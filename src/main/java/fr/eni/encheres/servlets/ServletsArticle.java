@@ -49,7 +49,6 @@ public class ServletsArticle extends HttpServlet {
                     boolean canUpdateArticle = true;
 
                     if (LocalDateTime.now().isAfter(a.getDateStartBid())) {
-                        System.out.println("oui");
                         canUpdateArticle = false;
                     }
 
