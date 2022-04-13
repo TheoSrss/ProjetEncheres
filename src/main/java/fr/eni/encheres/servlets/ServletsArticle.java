@@ -48,7 +48,8 @@ public class ServletsArticle extends HttpServlet {
                     }
                     boolean canUpdateArticle = true;
 
-                    if (a.getDateStartBid().isAfter(LocalDateTime.now())) {
+                    if (LocalDateTime.now().isAfter(a.getDateStartBid())) {
+                        System.out.println("oui");
                         canUpdateArticle = false;
                     }
 
@@ -115,7 +116,7 @@ public class ServletsArticle extends HttpServlet {
             }
         } catch (DALException | SQLException e) {
             e.printStackTrace();
-//            }
+
         }
     }
 }
