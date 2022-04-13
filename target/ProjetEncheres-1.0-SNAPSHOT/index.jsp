@@ -26,7 +26,7 @@
     </div>
 </c:if>
 <form method="POST" action="home" class="row">
-    <div class="form-group" style="left: auto;transform: translate(0,0)"  >
+    <div class="form-group" style="left: auto;transform: translate(0,0)">
         <label class="form-label" for="category">Categories :</label>
         <select id="category" name="category" class="form-control">
             <option value="null">Toutes</option>
@@ -34,7 +34,7 @@
                 <option value="${cat.id}">${cat.wording}</option>
             </c:forEach>
         </select>
-    </div clcl>
+    </div>
     <div class="form-group" style="left: auto;transform: translate(0,0)">
         <label class="form-label" for="name">Filtres :</label>
         <input type="text" id="name" name="name" class="form-control" placeholder="Le nom de l'article contient">
@@ -42,26 +42,28 @@
     <c:if test="${sessionScope.user != null }">
         <div class="form-group" style="left: auto;transform: translate(0,0)">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="typeBid" value="typeBidPurchase" id="typeBidPurchase">
+                <input class="form-check-input" type="radio" name="typeBid" value="typeBidPurchase"
+                       id="typeBidPurchase">
                 <label class="form-check-label" for="typeBidPurchase">
                     Achats
                 </label>
             </div>
             <div class="containerCheckbox" id="checkboxsPurchase">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox"  id="bidOpen">
+                    <input class="form-check-input" type="checkbox" id="bidOpen" name="bidOpen" disabled>
                     <label class="form-check-label" for="bidOpen">
                         Enchères ouvertes
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="bidOpen" id="myBids" >
+                    <input class="form-check-input" type="checkbox" id="myBids" name="myBids" disabled>
                     <label class="form-check-label" for="myBids">
                         Mes enchères
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="bidOpen" id="myWinBids" >
+                    <input class="form-check-input" type="checkbox" id="myWinBids" name="myWinBids"
+                           disabled>
                     <label class="form-check-label" for="myWinBids">
                         Mes enchères remportées
                     </label>
@@ -77,19 +79,22 @@
             </div>
             <div class="containerCheckbox" id="checkboxsMySell">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox"  id="mySellOpen">
+                    <input class="form-check-input" type="checkbox" id="mySellOpen" name="mySellOpen"
+                           disabled>
                     <label class="form-check-label" for="mySellOpen">
                         Mes ventes en cours
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="bidOpen" id="mySellNotStart" >
+                    <input class="form-check-input" type="checkbox" id="mySellNotStart"
+                           name="mySellNotStart" disabled>
                     <label class="form-check-label" for="mySellNotStart">
                         Ventes non débutées
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="bidOpen" id="mySellFinish" >
+                    <input class="form-check-input" type="checkbox" id="mySellFinish"
+                           name="mySellFinish" disabled>
                     <label class="form-check-label" for="mySellFinish">
                         Ventes terminées
                     </label>
@@ -98,7 +103,7 @@
         </div>
 
     </c:if>
-    <div  style="left: auto;transform: translate(0,0)">
+    <div style="left: auto;transform: translate(0,0)">
         <input style="margin-top: 20px" type="submit" value="Rechercher" class="btn btn-primary">
     </div>
 </form>
@@ -123,6 +128,8 @@
         </div>
     </c:forEach>
 </div>
+${$params}
+<c:out value="${$params}"></c:out>
 </body>
 <script>
     let cat =${catSelected};
@@ -131,42 +138,86 @@
     cat !== -1 ? $('#category').val(cat) : null;
     name ? $('#name').val(name) : null;
 
+    let typeBid = '${typeBid}';
+    typeBid != '' ? $('#' + typeBid).attr('checked', 'checked') : null;
+
+
+    let firstParam = '${firstParam}';
+    let secondParam = '${secondParam}';
+    let thirdParam = '${thirdParam}';
+
+    if (typeBid === "typeBidMySell") {
+        isTypeBidMySell();
+        console.log(firstParam);
+        console.log(secondParam);
+        if (firstParam === "on") {
+            $('#mySellOpen').prop('checked', true);
+        }
+        if (secondParam === "on") {
+            $('#mySellNotStart').prop('checked', true);
+        }
+        if (thirdParam === "on") {
+            $('#mySellFinish').prop('checked', true);
+        }
+
+    } else if (typeBid === "typeBidPurchase") {
+        isTypeBidPurchase()
+        if (firstParam === "on") {
+            $('#bidOpen').prop('checked', true);
+        }
+        if (secondParam === "on") {
+            $('#myBids').prop('checked', true);
+        }
+        if (thirdParam === "on") {
+            $('#myWinBids').prop('checked', true);
+        }
+    }
+
+
+    // let containerForm = $("#contaner" + typeBid + " div:first-child")
+    // console.log(containerForm);
+    // }
+
+
     $('.dateEnd').each(function () {
         text = $(this).text().split('T')[0]
         $(this).text(text);
     });
 
-    $('input[type=radio][name=typeBid]').change(function (){
-        if($(this).val()==="typeBidMySell"){
+    $('input[type=radio][name=typeBid]').change(function () {
+        console.log($(this).val())
+        if ($(this).val() === "typeBidMySell") {
             isTypeBidMySell();
-        }else if($(this).val()==="typeBidPurchase")
+        } else if ($(this).val() === "typeBidPurchase") {
             isTypeBidPurchase();
+        }
     });
 
-    function isTypeBidMySell(){
+    function isTypeBidMySell() {
         $('#checkboxsMySell').removeClass("filterCheckbox");
         $('#checkboxsPurchase').addClass("filterCheckbox");
 
-        $('#checkboxsMySell input').each(function(){
-            $(this).attr('disabled',false);
+        $('#checkboxsMySell input').each(function () {
+            $(this).attr('disabled', false);
         });
 
-        $('#checkboxsPurchase input').each(function(){
-            $(this).prop('checked',false);
-            $(this).attr('disabled',true);
+        $('#checkboxsPurchase input').each(function () {
+            $(this).prop('checked', false);
+            $(this).attr('disabled', true);
         });
     }
-    function isTypeBidPurchase(){
+
+    function isTypeBidPurchase() {
         $('#checkboxsMySell').addClass("filterCheckbox");
         $('#checkboxsPurchase').removeClass("filterCheckbox");
 
-        $('#checkboxsMySell input').each(function(){
-            $(this).prop('checked',false);
-            $(this).attr('disabled',true);
+        $('#checkboxsMySell input').each(function () {
+            $(this).prop('checked', false);
+            $(this).attr('disabled', true);
         });
 
-        $('#checkboxsPurchase input').each(function(){
-            $(this).attr('disabled',false);
+        $('#checkboxsPurchase input').each(function () {
+            $(this).attr('disabled', false);
         });
     }
 

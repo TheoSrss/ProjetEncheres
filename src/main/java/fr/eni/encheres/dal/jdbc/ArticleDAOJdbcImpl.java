@@ -119,11 +119,10 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
     @Override
     public ArrayList<Article> getAllArticles() throws DALException, SQLException {
         ArrayList<Article> articles = new ArrayList<Article>();
-
         try {
             con = ConnectionProvider.getConnection();
             stmt = con.prepareStatement("SELECT * FROM ARTICLESOLD as a INNER JOIN USER as u ON u.id=a.idUser INNER JOIN CATEGORY as c ON c.id=a.idCategory INNER JOIN WITHDRAWAL as w ON w.id=a.idWithdrawal" +
-                    " WHERE a.dateStartBid<NOW() AND a.dateEndBid>NOW()");
+                    "");
 
 
             ResultSet resultSet = stmt.executeQuery();

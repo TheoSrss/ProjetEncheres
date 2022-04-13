@@ -97,7 +97,7 @@ public class ServletsCreateArticle extends HttpServlet {
                         dateEnd,
                         Integer.parseInt(request.getParameter("initialPrice")),
                         -1,
-                        "TO_SALE",
+                        "NOT_START",
                         userSession,
                         categoryManager.getById(Integer.parseInt(request.getParameter("category"))),
                         address

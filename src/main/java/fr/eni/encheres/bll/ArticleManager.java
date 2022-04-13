@@ -1,16 +1,22 @@
 package fr.eni.encheres.bll;
 
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Bid;
+import fr.eni.encheres.bo.User;
 import fr.eni.encheres.dal.ArticleDao;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 public class ArticleManager {
     private static ArticleManager articleManager;
     private static ArticleDao articleDao;
+    private BidManager bidManager = BidManager.getInstance();
 
     private ArticleManager() {
         articleDao = DAOFactory.getArticleDao();
@@ -27,35 +33,106 @@ public class ArticleManager {
         return articleDao.insert(a);
     }
 
-    public ArrayList<Article> getAllArticles() throws DALException, SQLException {
-        return articleDao.getAllArticles();
+    public ArrayList<Article> getArticlesTOSALE() throws DALException, SQLException {
+
+        ArrayList<Article> articles = articleDao.getAllArticles();
+        ArrayList<Article> toReturn = new ArrayList<Article>();
+        for (Article a : articles) {
+            if (Objects.equals(a.getStateSale(), "TO_SALE")) {
+                if (LocalDateTime.now().isAfter(a.getDateStartBid()) && LocalDateTime.now().isBefore(a.getDateEndBid())) {
+                    toReturn.add(toReturn.size(), a);
+                }
+            }
+        }
+        return toReturn;
     }
 
-    public ArrayList<Article> getArticlesWithFilter(int idCat, String name) throws DALException, SQLException {
-
-        ArrayList<Article> articles = getAllArticles();
-
+    public ArrayList<Article> getArticlesWithFilter(int idCat, String name, String typeBid, Map<String, String> params, User u) throws DALException, SQLException {
+        ArrayList<Article> articles = articleDao.getAllArticles();
         if (idCat != -1) {
             ArrayList<Article> articlesForCat = new ArrayList<Article>();
-            int nb = 0;
             for (Article a : articles) {
                 if (a.getCategory().getId() == idCat) {
-                    articlesForCat.add(nb, a);
-                    nb++;
+                    articlesForCat.add(articlesForCat.size(), a);
                 }
             }
             articles = articlesForCat;
         }
         if (name != null) {
             ArrayList<Article> articlesForName = new ArrayList<Article>();
-            int nbN = 0;
             for (Article a : articles) {
                 if (a.getName().contains(name)) {
-                    articlesForName.add(nbN, a);
-                    nbN++;
+                    articlesForName.add(articlesForName.size(), a);
                 }
             }
             articles = articlesForName;
+        }
+
+        if (Objects.equals(typeBid, "typeBidPurchase")) {
+            ArrayList<Article> articlesFortypeBidPurchase = new ArrayList<Article>();
+            int nbB = 0;
+            for (Article a : articles) {
+                if (!Objects.equals(params.get("bidOpen"), "on") && !Objects.equals(params.get("myBids"), "on") && !Objects.equals(params.get("myWinBids"), "on")) {
+                    if (Objects.equals(a.getStateSale(), "TO_SALE")) {
+                        articlesFortypeBidPurchase.add(articlesFortypeBidPurchase.size(), a);
+                    } else if (Objects.equals(a.getStateSale(), "IS_WIN")) {
+                        Bid lastBid = bidManager.getLastBidForIdArticle(a.getId());
+                        if (lastBid != null) {
+                            if (u.getId() == lastBid.getUser().getId()) {
+                                articlesFortypeBidPurchase.add(articlesFortypeBidPurchase.size(), a);
+                            }
+                        }
+                    }
+                } else {
+                    if (Objects.equals(params.get("bidOpen"), "on") && Objects.equals(a.getStateSale(), "TO_SALE")) {
+                        articlesFortypeBidPurchase.add(articlesFortypeBidPurchase.size(), a);
+                    } else if (Objects.equals(params.get("myBids"), "on")) {
+                        Bid bid = bidManager.getBidForUserAndArticle(u, a);
+                        if (bid != null) {
+                            articlesFortypeBidPurchase.add(articlesFortypeBidPurchase.size(), a);
+                        }
+                    } else if (Objects.equals(params.get("myWinBids"), "on")) {
+                        Bid lastBid = bidManager.getLastBidForIdArticle(a.getId());
+                        if (lastBid != null) {
+                            if (lastBid.getUser().getId() == u.getId()) {
+                                articlesFortypeBidPurchase.add(articlesFortypeBidPurchase.size(), a);
+                            }
+                        }
+                    }
+                }
+                nbB++;
+            }
+            articles = articlesFortypeBidPurchase;
+        } else if (Objects.equals(typeBid, "typeBidMySell")) {
+            ArrayList<Article> articlesFortypeBidMySell = new ArrayList<Article>();
+            int nbBid = 0;
+            for (Article a : articles) {
+                if (!Objects.equals(params.get("mySellOpen"), "on") && !Objects.equals(params.get("mySellNotStart"), "on") && !Objects.equals(params.get("mySellFinish"), "on")) {
+                    if (a.getUser().getId() == u.getId() && (Objects.equals(a.getStateSale(), "NOT_START") || Objects.equals(a.getStateSale(), "TO_SALE") || Objects.equals(a.getStateSale(), "IS_WIN"))) {
+                        articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                    }
+                } else if (a.getUser().getId() == u.getId()) {
+                    if (Objects.equals(params.get("mySellOpen"), "on") && Objects.equals(a.getStateSale(), "TO_SALE")) {
+                        articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                    } else if (Objects.equals(params.get("mySellNotStart"), "on") && Objects.equals(a.getStateSale(), "NOT_START")) {
+                        articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                    } else if (Objects.equals(params.get("mySellFinish"), "on") && Objects.equals(a.getStateSale(), "IS_WIN")) {
+                        articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                    }
+                }
+                nbBid++;
+            }
+            articles = articlesFortypeBidMySell;
+        }
+
+        if (!Objects.equals(typeBid, "typeBidMySell")) {
+            ArrayList<Article> toReturn = new ArrayList<Article>();
+            for (Article a : articles) {
+                if (Objects.equals(a.getStateSale(), "TO_SALE")) {
+                    toReturn.add(toReturn.size(), a);
+                }
+            }
+            articles = toReturn;
         }
         return articles;
     }

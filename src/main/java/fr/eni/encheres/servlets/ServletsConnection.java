@@ -1,5 +1,6 @@
 package fr.eni.encheres.servlets;
 
+import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.User;
@@ -16,10 +17,12 @@ import java.sql.SQLException;
 @WebServlet(name = "connection", value = "/login")
 public class ServletsConnection extends HttpServlet {
     private UserManager userManager;
+    private ArticleManager articleManager;
 
 
     public void init() throws ServletException {
         userManager = UserManager.getInstance();
+        articleManager = ArticleManager.getInstance();
         super.init();
     }
 
@@ -43,6 +46,8 @@ public class ServletsConnection extends HttpServlet {
                 request.getSession().setAttribute("user", user);
                 request.setAttribute("catSelected", -1);
                 request.setAttribute("nameArticle", null);
+                request.setAttribute("articles", articleManager.getArticlesTOSALE());
+
                 getServletContext().getRequestDispatcher("/home").forward(request, response);
             }
         } catch (BLLException | DALException | SQLException e) {

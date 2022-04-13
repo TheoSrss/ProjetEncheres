@@ -1,5 +1,6 @@
 package fr.eni.encheres.dal.jdbc;
 
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Bid;
 import fr.eni.encheres.bo.User;
 import fr.eni.encheres.dal.BidDAO;
@@ -56,22 +57,49 @@ public class BidJdbcImpl implements BidDAO {
         return null;
     }
 
-        @Override
-        public Bid setNewBid (Bid b) throws DALException {
-            try {
-                con = ConnectionProvider.getConnection();
-                stmt = con.prepareStatement("INSERT INTO BID VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-                stmt.setInt(1, b.getUser().getId());
-                stmt.setInt(2, b.getArticleSold().getId());
-                stmt.setDate(3, new Date(b.getDate().getTime()));
-                stmt.setFloat(4, b.getAmount());
-                stmt.setString(5, null);
+    @Override
+    public Bid setNewBid(Bid b) throws DALException {
+        try {
+            con = ConnectionProvider.getConnection();
+            stmt = con.prepareStatement("INSERT INTO BID VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, b.getUser().getId());
+            stmt.setInt(2, b.getArticleSold().getId());
+            stmt.setDate(3, new Date(b.getDate().getTime()));
+            stmt.setFloat(4, b.getAmount());
+            stmt.setString(5, null);
 
-                int resultSet = stmt.executeUpdate();
+            int resultSet = stmt.executeUpdate();
 
-                return b;
-            } catch (SQLException e) {
-                throw new DALException("Couche DAL - " + e);
-            }
+            return b;
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
         }
     }
+
+    @Override
+    public Bid getBidForUserAndArticle(User u, Article a) throws DALException {
+        try {
+            con = ConnectionProvider.getConnection();
+            stmt = con.prepareStatement("SELECT * FROM bid WHERE idArticle=? AND idUser=?");
+            stmt.setInt(1, u.getId());
+            stmt.setInt(2, a.getId());
+
+            ResultSet resultSet = stmt.executeQuery();
+            Date lastDate = null;
+            Bid b = null;
+            while (resultSet.next()) {
+                b = new Bid(
+                        u,
+                        a,
+                        lastDate,
+                        resultSet.getFloat("amount")
+                );
+                return b;
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+    }
+}
