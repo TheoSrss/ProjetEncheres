@@ -67,9 +67,7 @@ public class ServeltsUpdateUser extends HttpServlet {
             }
             request.getRequestDispatcher("WEB-INF/updateUser.jsp").forward(request, response);
 
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (DALException e) {
+        } catch (NumberFormatException | DALException e) {
             e.printStackTrace();
         }
     }

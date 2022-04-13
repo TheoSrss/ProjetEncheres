@@ -12,4 +12,6 @@ public interface ArticleDao {
     public Article getArticleById(int id) throws DALException, SQLException;
 
     public ArrayList<Article> getAllArticles() throws DALException, SQLException;
+    public Article updateArticle(Article a) throws DALException, SQLException;
+
 }

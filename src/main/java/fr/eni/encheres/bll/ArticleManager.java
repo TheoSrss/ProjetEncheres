@@ -62,6 +62,12 @@ public class ArticleManager {
 
     public Article getArticleById(int i) throws DALException, SQLException {
 
-        return articleDao.getArticleById( i);
+        return articleDao.getArticleById(i);
     }
+
+    public Article updateArticle(Article a) throws DALException, SQLException {
+
+        return articleDao.updateArticle(a);
+    }
+
 }

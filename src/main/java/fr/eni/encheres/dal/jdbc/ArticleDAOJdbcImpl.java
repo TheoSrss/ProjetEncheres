@@ -10,7 +10,6 @@ import fr.eni.encheres.dal.DALException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
             stmt.setString(3, a.getDescription());
             stmt.setString(4, a.getDateStartBid().toString());
             stmt.setString(5, a.getDateEndBid().toString());
-//            stmt.setDate(5, Date.valueOf("2021-01-01 15:12:10.1"));
             stmt.setFloat(6, a.getInitialPrice());
             stmt.setFloat(7, a.getSoldPrice());
             stmt.setString(8, a.getStateSale());
@@ -181,5 +179,52 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
+    }
+
+    @Override
+    public Article updateArticle(Article a) throws DALException, SQLException {
+
+        try {
+            System.out.println(a.getName());
+            System.out.println(a.getId());
+            con = ConnectionProvider.getConnection();
+            stmt = con.prepareStatement("UPDATE articlesold SET name=?, description=?, dateStartBid=?, dateEndBid=?, initialPrice=?, idCategory=? WHERE id=?", Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, a.getName());
+            stmt.setString(2, a.getDescription());
+            stmt.setString(3, a.getDateStartBid().toString());
+            stmt.setString(4, a.getDateEndBid().toString());
+            stmt.setFloat(5, a.getInitialPrice());
+            stmt.setInt(6, a.getCategory().getId());
+            stmt.setInt(7, a.getId());
+            System.out.println(stmt);
+            int nb = stmt.executeUpdate();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            if (nb > 0) {
+                ResultSet resultSet = stmt.getGeneratedKeys();
+                if (resultSet.next()) {
+                    Article article = new Article(
+                            resultSet.getInt("a.id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("description"),
+                            LocalDateTime.parse(resultSet.getString("dateStartBid"), formatter),
+                            LocalDateTime.parse(resultSet.getString("dateEndBid"), formatter),
+                            resultSet.getInt("initialPrice"),
+                            resultSet.getInt("soldPrice"),
+                            resultSet.getString("stateSale"),
+                            a.getUser(),
+                            a.getCategory(),
+                            a.getWithdrawal()
+                    );
+                    con.close();
+                    return article;
+                }
+            }
+        } catch (
+                SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+        return null;
     }
 }
