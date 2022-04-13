@@ -75,6 +75,5 @@
         console.log(text)
         $(this).text(text)
     })
-
 </script>
 </html>

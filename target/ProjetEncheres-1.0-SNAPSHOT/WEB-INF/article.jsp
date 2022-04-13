@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+
 <head>
     <title>Article </title>
 </head>
@@ -63,4 +63,11 @@
     </ul>
 </div>
 </body>
+<script>
+    $('.dateEnd').each(function () {
+        text = $(this).text().split('T')[0]
+        console.log(text)
+        $(this).text(text)
+    })
+</script>
 </html>
