@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/deleteUser")
-public class ServeltsDeleteUser extends HttpServlet {
+public class ServletsDeleteUser extends HttpServlet {
     private UserManager userManager;
 
     public void init() throws ServletException {

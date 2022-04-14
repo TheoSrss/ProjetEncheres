@@ -28,6 +28,7 @@
     <h5 style="text-align: center;margin-bottom: 15px">Detail de la vente</h5>
     <ul class="list-group">
         <li class="list-group-item">${article.name}</li>
+        <li class="list-group-item"><img src="../pictures/img.jpg" alt=""></li>
         <li class="list-group-item">Description: ${article.description}</li>
         <li class="list-group-item">Catégorie: ${article.category.wording} </li>
         <c:if test="${bid != null }">

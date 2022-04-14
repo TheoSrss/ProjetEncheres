@@ -9,4 +9,13 @@
             <include-prelude>/WEB-INF/navbar.jsp</include-prelude>
         </jsp-property-group>
     </jsp-config>
+    <servlet-mapping>
+        <servlet-name>ServletsHome</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletsHome</servlet-name>
+        <servlet-class>fr.eni.encheres.servlets.ServletsHome</servlet-class>
+    </servlet>
+
 </web-app>

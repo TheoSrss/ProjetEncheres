@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @WebServlet(name = "home", value = "/")
-public class ServeltsHome extends HttpServlet {
+public class ServletsHome extends HttpServlet {
 
     private ArticleManager articleManager;
     private CategoryManager categoryManager;

@@ -113,7 +113,7 @@
             <c:if test="${sessionScope.user != null }">
                 <a href="article?idArticle=${a.id}" class="hrefArticle"></a>
             </c:if>
-            <img class="card-img-top" src="..." alt="Card image cap">
+            <img class="card-img-top" src="pictures/img.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">${a.name}</h5>
                 <p class="card-text">${a.description}</p>
@@ -124,7 +124,6 @@
                 <li class="list-group-item">Vendeur : <a href="profile?idUser=${a.user.id}">${a.user.username}</a>
                 </li>
             </ul>
-
         </div>
     </c:forEach>
 </div>
@@ -148,8 +147,6 @@ ${$params}
 
     if (typeBid === "typeBidMySell") {
         isTypeBidMySell();
-        console.log(firstParam);
-        console.log(secondParam);
         if (firstParam === "on") {
             $('#mySellOpen').prop('checked', true);
         }
@@ -173,19 +170,12 @@ ${$params}
         }
     }
 
-
-    // let containerForm = $("#contaner" + typeBid + " div:first-child")
-    // console.log(containerForm);
-    // }
-
-
     $('.dateEnd').each(function () {
         text = $(this).text().split('T')[0]
         $(this).text(text);
     });
 
     $('input[type=radio][name=typeBid]').change(function () {
-        console.log($(this).val())
         if ($(this).val() === "typeBidMySell") {
             isTypeBidMySell();
         } else if ($(this).val() === "typeBidPurchase") {

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @WebServlet("/updateUser")
-public class ServeltsUpdateUser extends HttpServlet {
+public class ServletsUpdateUser extends HttpServlet {
     private UserManager userManager;
 
     public void init() throws ServletException {
