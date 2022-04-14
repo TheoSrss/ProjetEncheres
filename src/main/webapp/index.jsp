@@ -121,8 +121,18 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Prix : ${a.initialPrice} </li>
                 <li class="list-group-item">Fin de l'enchere :<span class="dateEnd">${a.dateEndBid}</span></li>
-                <li class="list-group-item">Vendeur : <a href="profile?idUser=${a.user.id}">${a.user.username}</a>
-                </li>
+                <c:if test="${a.stateSale =='IS_WIN' }">
+                    <li class="list-group-item">Gagnant : <a href="profile?idUser=${a.user.id}">${a.user.username}</a>
+                    </li>
+                </c:if>
+                <c:if test="${a.stateSale =='TO_SALE' }">
+                    <li class="list-group-item">Vendeur : <a href="profile?idUser=${a.user.id}">${a.user.username}</a>
+                    </li>
+                </c:if>
+                <c:if test="${a.stateSale =='NOT_START' }">
+                    <li class="list-group-item">Vendeur : <a href="profile?idUser=${a.user.id}">${a.user.username}</a>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </c:forEach>

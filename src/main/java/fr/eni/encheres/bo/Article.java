@@ -14,9 +14,24 @@ public class Article {
     private User user;
     private Category category;
     private Withdrawal withdrawal;
+    private User lastUser;
 
 
-    public Article( String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
+    public Article(String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, User lasUser, Category category, Withdrawal withdrawal) {
+//        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dateStartBid = dateStartBid;
+        this.dateEndBid = dateEndBid;
+        this.initialPrice = initialPrice;
+        this.soldPrice = soldPrice;
+        this.stateSale = stateSale;
+        this.user = user;
+        this.lastUser = lasUser;
+        this.category = category;
+        this.withdrawal = withdrawal;
+    }
+    public Article(String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
 //        this.id = id;
         this.name = name;
         this.description = description;
@@ -29,6 +44,7 @@ public class Article {
         this.category = category;
         this.withdrawal = withdrawal;
     }
+
     public Article(int id, String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
         this.id = id;
         this.name = name;
@@ -39,6 +55,21 @@ public class Article {
         this.soldPrice = soldPrice;
         this.stateSale = stateSale;
         this.user = user;
+        this.category = category;
+        this.withdrawal = withdrawal;
+    }
+
+    public Article(int id, String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, User lasUser, Category category, Withdrawal withdrawal) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dateStartBid = dateStartBid;
+        this.dateEndBid = dateEndBid;
+        this.initialPrice = initialPrice;
+        this.soldPrice = soldPrice;
+        this.stateSale = stateSale;
+        this.user = user;
+        this.lastUser = lasUser;
         this.category = category;
         this.withdrawal = withdrawal;
     }
@@ -129,5 +160,13 @@ public class Article {
 
     public void setWithdrawal(Withdrawal withdrawal) {
         this.withdrawal = withdrawal;
+    }
+
+    public User getLastUser() {
+        return lastUser;
+    }
+
+    public void setLastUser(User lastUser) {
+        this.lastUser = lastUser;
     }
 }

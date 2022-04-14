@@ -114,7 +114,7 @@ public class UserDAOJdbcImpl implements UserDAO {
                         resultSet.getBoolean("admin")
                 );
             }
-
+            con.close();
             return user;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
@@ -211,12 +211,12 @@ public class UserDAOJdbcImpl implements UserDAO {
             stmt.setInt(2, id);
 
             stmt.executeUpdate();
+            con.close();
 
         } catch (
                 SQLException e) {
             throw new DALException("Couche DAL - " + e);
         }
-        System.out.println("fin");
         return null;
     }
 }

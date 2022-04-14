@@ -10,6 +10,7 @@ import fr.eni.encheres.dal.DAOFactory;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -108,16 +109,24 @@ public class ArticleManager {
             int nbBid = 0;
             for (Article a : articles) {
                 if (!Objects.equals(params.get("mySellOpen"), "on") && !Objects.equals(params.get("mySellNotStart"), "on") && !Objects.equals(params.get("mySellFinish"), "on")) {
-                    if (a.getUser().getId() == u.getId() && (Objects.equals(a.getStateSale(), "NOT_START") || Objects.equals(a.getStateSale(), "TO_SALE") || Objects.equals(a.getStateSale(), "IS_WIN"))) {
+                    if (a.getUser().getId() == u.getId() && (Objects.equals(a.getStateSale(), "NOT_START") || Objects.equals(a.getStateSale(), "TO_SALE"))) {
                         articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                    } else if (a.getLastUser() != null) {
+                        if (a.getLastUser().getId() == u.getId() && (Objects.equals(a.getStateSale(), "IS_WIN") || Objects.equals(a.getStateSale(), "NOT_SALE"))) {
+                            articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                        }
                     }
                 } else if (a.getUser().getId() == u.getId()) {
                     if (Objects.equals(params.get("mySellOpen"), "on") && Objects.equals(a.getStateSale(), "TO_SALE")) {
                         articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
                     } else if (Objects.equals(params.get("mySellNotStart"), "on") && Objects.equals(a.getStateSale(), "NOT_START")) {
                         articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
-                    } else if (Objects.equals(params.get("mySellFinish"), "on") && Objects.equals(a.getStateSale(), "IS_WIN")) {
-                        articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                    }
+                } else if (a.getLastUser() != null) {
+                    if (a.getLastUser().getId() == u.getId()) {
+                        if (Objects.equals(params.get("mySellFinish"), "on") && (Objects.equals(a.getStateSale(), "IS_WIN") || Objects.equals(a.getStateSale(), "NOT_SALE"))) {
+                            articlesFortypeBidMySell.add(articlesFortypeBidMySell.size(), a);
+                        }
                     }
                 }
                 nbBid++;
@@ -126,10 +135,15 @@ public class ArticleManager {
         }
 
         if (!Objects.equals(typeBid, "typeBidMySell")) {
+
             ArrayList<Article> toReturn = new ArrayList<Article>();
             for (Article a : articles) {
                 if (Objects.equals(a.getStateSale(), "TO_SALE")) {
                     toReturn.add(toReturn.size(), a);
+                } else if (u != null) {
+                    if (Objects.equals(a.getStateSale(), "IS_WIN") && a.getUser().getId() == u.getId()) {
+                        toReturn.add(toReturn.size(), a);
+                    }
                 }
             }
             articles = toReturn;
@@ -146,5 +160,46 @@ public class ArticleManager {
 
         return articleDao.updateArticle(a);
     }
+
+    public void updateAllArticleState() throws DALException, SQLException {
+        Map<String, String> notifs = new HashMap<String, String>();
+
+        checkIfArticleCanStart();
+        checkIfArticleCanFinish();
+
+    }
+
+    private void checkIfArticleCanStart() throws DALException, SQLException {
+
+        ArrayList<Article> articles = articleDao.getArticlesWithState("NOT_START");
+//        ArrayList<Article> articlesToReturn = new ArrayList<>();
+
+        for (Article a : articles) {
+            if (LocalDateTime.now().isAfter(a.getDateStartBid()) && LocalDateTime.now().isBefore(a.getDateEndBid())) {
+                a.setStateSale("TO_SALE");
+                articleDao.updateArticle(a);
+            }
+        }
+    }
+
+    private void checkIfArticleCanFinish() throws DALException, SQLException {
+
+        ArrayList<Article> articles = articleDao.getArticlesWithState("TO_SALE");
+
+        for (Article a : articles) {
+            if (LocalDateTime.now().isAfter(a.getDateEndBid())) {
+                Bid lastBid = bidManager.getLastBidForIdArticle(a.getId());
+                if (lastBid != null) {
+                    a.setStateSale("IS_WIN");
+                    a.setLastUser(a.getUser());
+                    a.setUser(lastBid.getUser());
+                } else {
+                    a.setStateSale("NOT_SALE");
+                }
+                articleDao.updateArticle(a);
+            }
+        }
+    }
+
 
 }

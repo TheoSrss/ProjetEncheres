@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 @WebServlet("/article")
 public class ServletsArticle extends HttpServlet {
@@ -46,10 +47,10 @@ public class ServletsArticle extends HttpServlet {
                         b.setArticleSold(a);
                         min = b.getAmount();
                     }
-                    boolean canUpdateArticle = true;
+                    boolean canUpdateArticle = false;
 
-                    if (LocalDateTime.now().isAfter(a.getDateStartBid())) {
-                        canUpdateArticle = false;
+                    if (Objects.equals(a.getStateSale(), "NOT_START")) {
+                        canUpdateArticle = true;
                     }
 
                     request.setAttribute("canUpdateArticle", canUpdateArticle);

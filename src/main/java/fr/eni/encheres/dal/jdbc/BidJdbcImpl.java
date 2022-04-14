@@ -47,6 +47,7 @@ public class BidJdbcImpl implements BidDAO {
                         lastDate,
                         resultSet.getFloat("amount")
                 );
+                con.close();
                 return b;
             }
 
@@ -69,7 +70,7 @@ public class BidJdbcImpl implements BidDAO {
             stmt.setString(5, null);
 
             int resultSet = stmt.executeUpdate();
-
+            con.close();
             return b;
         } catch (SQLException e) {
             throw new DALException("Couche DAL - " + e);
@@ -94,8 +95,10 @@ public class BidJdbcImpl implements BidDAO {
                         lastDate,
                         resultSet.getFloat("amount")
                 );
+                con.close();
                 return b;
             }
+            con.close();
             return null;
 
         } catch (SQLException e) {

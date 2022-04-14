@@ -41,17 +41,30 @@
         <li class="list-group-item">Début de l'enchère: ${article.dateStartBid}</li>
         <li class="list-group-item">Fin de l'enchère: ${article.dateEndBid}</li>
         <li class="list-group-item">Retrait: ${article.withdrawal.city}</li>
-        <li class="list-group-item">Vendeur: ${article.user.username}</li>
+        <c:if test="${article.stateSale =='IS_WIN' }">
+            <li class="list-group-item">Gagnant : <a
+                    href="profile?idUser=${article.user.id}">${article.user.username}</a>
+            <li class="list-group-item">Vendeur : <a
+                    href="profile?idUser=${article.lastUser.id}">${article.lastUser.username}</a>
+            </li>
+        </c:if>
+        <c:if test="${article.stateSale =='TO_SALE' }">
+            <li class="list-group-item">Vendeur : <a
+                    href="profile?idUser=${article.user.id}">${article.user.username}</a>
+            </li>
+        </c:if>
 
         <c:if test="${sessionScope.user != null }">
             <c:if test="${article.user.id ne sessionScope.user.id }">
-                <form method="POST" action="article?idArticle=${article.id}">
-                    <div class="form-group">
-                        <label class="form-label" for="price">Votre proposition :</label>
-                        <input min="${min}" type="number" id="price" name="price" class="form-control">
-                    </div>
-                    <input style="margin-top: 20px" type="submit" value="Enchérir" class="btn btn-primary">
-                </form>
+                <c:if test="${article.stateSale =='TO_SALE' }">
+                    <form method="POST" action="article?idArticle=${article.id}">
+                        <div class="form-group">
+                            <label class="form-label" for="price">Votre proposition :</label>
+                            <input min="${min}" type="number" id="price" name="price" class="form-control">
+                        </div>
+                        <input style="margin-top: 20px" type="submit" value="Enchérir" class="btn btn-primary">
+                    </form>
+                </c:if>
             </c:if>
             <c:if test="${article.user.id eq sessionScope.user.id }">
                 <c:if test="${canUpdateArticle}">

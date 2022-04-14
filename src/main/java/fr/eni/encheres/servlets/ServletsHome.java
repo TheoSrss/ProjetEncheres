@@ -32,6 +32,8 @@ public class ServletsHome extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         try {
+            articleManager.updateAllArticleState();
+
             ArrayList<Category> categories = categoryManager.getAllCategory();
             request.setAttribute("categories", categories);
             request.setAttribute("articles", articleManager.getArticlesTOSALE());
@@ -53,6 +55,8 @@ public class ServletsHome extends HttpServlet {
         int idCat = -1;
         String nameArticle = null;
         try {
+            articleManager.updateAllArticleState();
+
             if (!Objects.equals(request.getParameter("category"), null)) {
                 if (!Objects.equals(request.getParameter("category"), "null")) {
                     idCat = Integer.parseInt(request.getParameter("category"));
