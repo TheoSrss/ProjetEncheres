@@ -25,7 +25,7 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
 
         try {
             con = ConnectionProvider.getConnection();
-            stmt = con.prepareStatement("INSERT INTO ARTICLESOLD VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            stmt = con.prepareStatement("INSERT INTO ARTICLESOLD VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, null);
             stmt.setString(2, a.getName());
@@ -36,8 +36,9 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
             stmt.setFloat(7, a.getSoldPrice());
             stmt.setString(8, a.getStateSale());
             stmt.setInt(9, a.getUser().getId());
-            stmt.setInt(10, a.getCategory().getId());
-            stmt.setInt(11, a.getWithdrawal().getId());
+            stmt.setString(10, null);
+            stmt.setInt(11, a.getCategory().getId());
+            stmt.setInt(12, a.getWithdrawal().getId());
 
             int nb = stmt.executeUpdate();
 
@@ -304,6 +305,22 @@ public class ArticleDAOJdbcImpl implements ArticleDao {
             con.close();
 
             return toReturn;
+
+        } catch (
+                SQLException e) {
+            throw new DALException("Couche DAL - " + e);
+        }
+    }
+
+    @Override
+    public void deleteArticle(Article a) throws DALException {
+        try {
+            con = ConnectionProvider.getConnection();
+            stmt = con.prepareStatement("DELETE FROM articleSOld WHERE id=?");
+
+            stmt.setInt(1, a.getId());
+            stmt.executeUpdate();
+            con.close();
 
         } catch (
                 SQLException e) {

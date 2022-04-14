@@ -144,7 +144,7 @@ public class UserDAOJdbcImpl implements UserDAO {
         try {
             con = ConnectionProvider.getConnection();
 
-            stmt = con.prepareStatement("UPDATE user SET username =?,surname=?,firstName=?,email=?,phone=?,street=?,postalCode=?,city=?,password=?WHERE id=?");
+            stmt = con.prepareStatement("UPDATE user SET username =?,surname=?,firstName=?,email=?,phone=?,street=?,postalCode=?,city=?,password=?,credit=?WHERE id=?");
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getSurname());
             stmt.setString(3, user.getFirstName());
@@ -154,7 +154,8 @@ public class UserDAOJdbcImpl implements UserDAO {
             stmt.setInt(7, user.getPostalCode());
             stmt.setString(8, user.getCity());
             stmt.setString(9, user.getPassword());
-            stmt.setInt(10, user.getId());
+            stmt.setFloat(10, user.getCredit());
+            stmt.setInt(11, user.getId());
 
             stmt.executeUpdate();
             con.close();

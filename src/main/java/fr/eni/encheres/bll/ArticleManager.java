@@ -10,7 +10,6 @@ import fr.eni.encheres.dal.DAOFactory;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,6 +17,7 @@ public class ArticleManager {
     private static ArticleManager articleManager;
     private static ArticleDao articleDao;
     private BidManager bidManager = BidManager.getInstance();
+    private UserManager userManager = UserManager.getInstance();
 
     private ArticleManager() {
         articleDao = DAOFactory.getArticleDao();
@@ -162,17 +162,13 @@ public class ArticleManager {
     }
 
     public void updateAllArticleState() throws DALException, SQLException {
-        Map<String, String> notifs = new HashMap<String, String>();
-
         checkIfArticleCanStart();
         checkIfArticleCanFinish();
-
     }
 
     private void checkIfArticleCanStart() throws DALException, SQLException {
 
         ArrayList<Article> articles = articleDao.getArticlesWithState("NOT_START");
-//        ArrayList<Article> articlesToReturn = new ArrayList<>();
 
         for (Article a : articles) {
             if (LocalDateTime.now().isAfter(a.getDateStartBid()) && LocalDateTime.now().isBefore(a.getDateEndBid())) {
@@ -190,9 +186,18 @@ public class ArticleManager {
             if (LocalDateTime.now().isAfter(a.getDateEndBid())) {
                 Bid lastBid = bidManager.getLastBidForIdArticle(a.getId());
                 if (lastBid != null) {
+                    System.out.println("win");
+
+
                     a.setStateSale("IS_WIN");
                     a.setLastUser(a.getUser());
                     a.setUser(lastBid.getUser());
+                    User userCredit = a.getLastUser();
+                    userCredit.setCredit(userCredit.getCredit() + lastBid.getAmount());
+                    System.out.println(userCredit.getId());
+                    System.out.println(userCredit.getCredit());
+
+                    userManager.updateUser(userCredit);
                 } else {
                     a.setStateSale("NOT_SALE");
                 }
@@ -201,5 +206,7 @@ public class ArticleManager {
         }
     }
 
-
+    public void deleteArticle(Article a) throws DALException, SQLException {
+        articleDao.deleteArticle(a);
+    }
 }

@@ -51,7 +51,6 @@ public class ServletsHome extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         User userSession = (User) request.getSession().getAttribute("user");
-
         int idCat = -1;
         String nameArticle = null;
         try {

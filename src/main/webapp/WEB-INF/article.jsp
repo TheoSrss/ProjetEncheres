@@ -28,7 +28,7 @@
     <h5 style="text-align: center;margin-bottom: 15px">Detail de la vente</h5>
     <ul class="list-group">
         <li class="list-group-item">${article.name}</li>
-        <li class="list-group-item"><img src="../pictures/img.jpg" alt=""></li>
+        <li class="list-group-item"><img src="pictures/img.jpg" alt=""></li>
         <li class="list-group-item">Description: ${article.description}</li>
         <li class="list-group-item">Catégorie: ${article.category.wording} </li>
         <c:if test="${bid != null }">
@@ -68,9 +68,14 @@
             </c:if>
             <c:if test="${article.user.id eq sessionScope.user.id }">
                 <c:if test="${canUpdateArticle}">
-                    <a href="updateArticle?idArticle=${article.id}">
-                        <button class="btn btn-primary"> Modifier l'article</button>
-                    </a>
+                    <div style="width: 100%;margin-top: 25px;display: flex;justify-content: space-evenly;align-items: center;flex-direction: row;flex-wrap: wrap;">
+                        <a href="updateArticle?idArticle=${article.id}">
+                            <button class="btn btn-primary"> Modifier l'article</button>
+                        </a>
+                        <a href="deleteArticle?idArticle=${article.id}">
+                            <button class="btn btn-danger"> Supprimer l'article</button>
+                        </a>
+                    </div>
                 </c:if>
             </c:if>
         </c:if>

@@ -10,21 +10,22 @@ import fr.eni.encheres.bo.Withdrawal;
 import fr.eni.encheres.dal.DALException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.Part;
+import java.io.*;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 @WebServlet("/createArticle")
+@MultipartConfig
 public class ServletsCreateArticle extends HttpServlet {
     private ArticleManager articleManager;
     private CategoryManager categoryManager;
@@ -44,9 +45,7 @@ public class ServletsCreateArticle extends HttpServlet {
             try {
                 ArrayList<Category> categories = categoryManager.getAllCategory();
                 request.setAttribute("categories", categories);
-
                 request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
-
             } catch (DALException | SQLException e) {
                 e.printStackTrace();
             }
@@ -57,7 +56,6 @@ public class ServletsCreateArticle extends HttpServlet {
 
         try {
             User userSession = (User) request.getSession().getAttribute("user");
-
             //checkIfInputIsEmpty
             if (request.getParameter("name").equals("") ||
                     request.getParameter("description").equals("") ||
@@ -75,7 +73,6 @@ public class ServletsCreateArticle extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/createArticle.jsp").forward(request, response);
 
             } else {
-
                 Withdrawal withdrawal = new Withdrawal(
                         request.getParameter("street"),
                         Integer.parseInt(request.getParameter("postalCode")),
@@ -113,5 +110,20 @@ public class ServletsCreateArticle extends HttpServlet {
         } catch (DALException | SQLException e) {
             e.printStackTrace();
         }
+        request.setAttribute("error", "Erreur");
+
+        getServletContext().getRequestDispatcher("/home").forward(request, response);
+
+    }
+
+    /*
+     * Récupération du nom du fichier dans la requête.
+     */
+    private String getFileName(Part part) {
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename"))
+                return content.substring(content.indexOf("=") + 2, content.length() - 1);
+        }
+        return "Default.file";
     }
 }

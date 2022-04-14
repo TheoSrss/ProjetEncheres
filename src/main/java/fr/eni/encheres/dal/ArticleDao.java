@@ -15,4 +15,5 @@ public interface ArticleDao {
     public Article updateArticle(Article a) throws DALException, SQLException;
     public ArrayList<Article> getArticlesWithState(String state) throws DALException, SQLException;
 
+    void deleteArticle(Article a) throws DALException;
 }

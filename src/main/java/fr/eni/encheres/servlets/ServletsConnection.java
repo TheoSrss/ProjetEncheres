@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -43,6 +44,9 @@ public class ServletsConnection extends HttpServlet {
                 request.setAttribute("error", "Identifiant et/ou mot de passe incorrect");
                 request.getRequestDispatcher("WEB-INF/connection.jsp").forward(request, response);
             } else {
+                HttpSession session = request.getSession();
+
+                session.setMaxInactiveInterval(300);
                 request.getSession().setAttribute("user", user);
                 request.setAttribute("catSelected", -1);
                 request.setAttribute("nameArticle", null);

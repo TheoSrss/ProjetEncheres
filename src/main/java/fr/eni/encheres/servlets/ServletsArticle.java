@@ -88,6 +88,18 @@ public class ServletsArticle extends HttpServlet {
                 boolean canBid = userManager.checkIfUserCanBid(user.getCredit(), price);
 
                 if (canBid) {
+                    Bid lastBid = bidManager.getLastBidForIdArticle(Integer.parseInt(idArticle));
+                    System.out.println(lastBid);
+                    if (lastBid != null) {
+
+                        User lastUser = lastBid.getUser();
+                        lastUser.setCredit(lastUser.getCredit() + lastBid.getAmount());
+                        System.out.println(lastUser.getId());
+                        System.out.println(lastUser.getCredit());
+                        userManager.updateUser(lastUser);
+                    }
+
+
                     Bid bid = new Bid(user, article, new Date(), price);
                     bidManager.setNewBid(bid);
 
@@ -100,8 +112,8 @@ public class ServletsArticle extends HttpServlet {
                     if (article.getDateStartBid().isAfter(LocalDateTime.now())) {
                         canUpdateArticle = false;
                     }
-                    request.setAttribute("canUpdateArticle", canUpdateArticle);
 
+                    request.setAttribute("canUpdateArticle", canUpdateArticle);
                     request.setAttribute("article", article);
                     request.setAttribute("bid", bid);
                     request.setAttribute("min", bid.getAmount() + 1);

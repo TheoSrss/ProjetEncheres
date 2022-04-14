@@ -113,7 +113,7 @@
             <c:if test="${sessionScope.user != null }">
                 <a href="article?idArticle=${a.id}" class="hrefArticle"></a>
             </c:if>
-            <img class="card-img-top" src="pictures/img.jpg" alt="Card image cap">
+            <img class="card-img-top" src="./pictures/" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">${a.name}</h5>
                 <p class="card-text">${a.description}</p>

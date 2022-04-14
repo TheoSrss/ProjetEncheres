@@ -17,5 +17,7 @@
         <servlet-name>ServletsHome</servlet-name>
         <servlet-class>fr.eni.encheres.servlets.ServletsHome</servlet-class>
     </servlet>
-
+    <session-config>
+        <session-timeout>300</session-timeout>
+    </session-config>
 </web-app>
