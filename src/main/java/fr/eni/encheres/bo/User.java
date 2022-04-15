@@ -13,8 +13,6 @@ public class User {
     private String password;
     private float credit;
     private boolean isAdmin;
-    //    private List<Enchere> encheres;
-//    private List<Article> articles;
 
     public User(String username,String firstName){
         this.username = username;

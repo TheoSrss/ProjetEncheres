@@ -7,7 +7,6 @@ public class Withdrawal {
     private String city;
 
     public Withdrawal(String street, int postalCode, String city) {
-//        this.id = id;
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;

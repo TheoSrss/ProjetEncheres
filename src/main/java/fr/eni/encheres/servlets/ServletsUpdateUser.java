@@ -35,38 +35,53 @@ public class ServletsUpdateUser extends HttpServlet {
         User userSession = (User) request.getSession().getAttribute("user");
 
         try {
-            String password = request.getParameter("password");
-            String passwordCheck = request.getParameter("passwordCheck");
-            if (Objects.equals(password, passwordCheck)) {
-                User user = new User(
-                        userSession.getId(),
-                        request.getParameter("username"),
-                        request.getParameter("surname"),
-                        request.getParameter("firstName"),
-                        request.getParameter("email"),
-                        Integer.parseInt(request.getParameter("phone")),
-                        request.getParameter("street"),
-                        Integer.parseInt(request.getParameter("postalCode")),
-                        request.getParameter("city"),
-                        request.getParameter("password"),
-                        userSession.getCredit(), userSession.isAdmin()
-                );
-                String canCreate=userManager.checkIfUserCanBeCreate(user);
 
-                boolean usernameCheck=userManager.checkUsernameIsCorrect(user.getUsername());
-                if(canCreate==null && usernameCheck) {
-                    userManager.updateUser(user);
-                    request.getSession().setAttribute("user", user);
-                }else if(!usernameCheck){
-                    request.setAttribute("error", " Veuillez utiliser un pseudo seulement avec des caractères alphanumérique");
-                }else{
-                    request.setAttribute("error", canCreate+" déjà utilisé sur le site, veuillez en utiliser un autre.");
+            if (request.getParameter("username").equals("") ||
+                    request.getParameter("surname").equals("") ||
+                    request.getParameter("firstName").equals("") ||
+                    request.getParameter("email").equals("") ||
+                    request.getParameter("phone").equals("") ||
+                    request.getParameter("street").equals("") ||
+                    request.getParameter("postalCode").equals("") ||
+                    request.getParameter("city").equals("") ||
+                    request.getParameter("password").equals("") ||
+                    request.getParameter("passwordCheck").equals("")
+            ) {
+                request.setAttribute("error", "Veuillez remplir tous les champs");
+                doGet(request, response);
+            } else {
+                String password = request.getParameter("password");
+                String passwordCheck = request.getParameter("passwordCheck");
+                if (Objects.equals(password, passwordCheck)) {
+                    User user = new User(
+                            userSession.getId(),
+                            request.getParameter("username"),
+                            request.getParameter("surname"),
+                            request.getParameter("firstName"),
+                            request.getParameter("email"),
+                            Integer.parseInt(request.getParameter("phone")),
+                            request.getParameter("street"),
+                            Integer.parseInt(request.getParameter("postalCode")),
+                            request.getParameter("city"),
+                            request.getParameter("password"),
+                            userSession.getCredit(), userSession.isAdmin()
+                    );
+                    String canCreate = userManager.checkIfUserCanBeCreate(user);
+
+                    boolean usernameCheck = userManager.checkUsernameIsCorrect(user.getUsername());
+                    if (canCreate == null && usernameCheck) {
+                        userManager.updateUser(user);
+                        request.getSession().setAttribute("user", user);
+                    } else if (!usernameCheck) {
+                        request.setAttribute("error", " Veuillez utiliser un pseudo seulement avec des caractères alphanumérique");
+                    } else {
+                        request.setAttribute("error", canCreate + " déjà utilisé sur le site, veuillez en utiliser un autre.");
+                    }
+                } else {
+                    request.setAttribute("error", "Confimation de mot de passe non identique");
                 }
-            }else{
-                request.setAttribute("error", "Confimation de mot de passe non identique");
+                request.getRequestDispatcher("WEB-INF/updateUser.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("WEB-INF/updateUser.jsp").forward(request, response);
-
         } catch (NumberFormatException | DALException e) {
             e.printStackTrace();
         }

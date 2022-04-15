@@ -186,16 +186,12 @@ public class ArticleManager {
             if (LocalDateTime.now().isAfter(a.getDateEndBid())) {
                 Bid lastBid = bidManager.getLastBidForIdArticle(a.getId());
                 if (lastBid != null) {
-                    System.out.println("win");
-
 
                     a.setStateSale("IS_WIN");
                     a.setLastUser(a.getUser());
                     a.setUser(lastBid.getUser());
                     User userCredit = a.getLastUser();
                     userCredit.setCredit(userCredit.getCredit() + lastBid.getAmount());
-                    System.out.println(userCredit.getId());
-                    System.out.println(userCredit.getCredit());
 
                     userManager.updateUser(userCredit);
                 } else {

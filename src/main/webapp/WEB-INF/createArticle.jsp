@@ -26,15 +26,15 @@
 </c:if>
 <div class="container">
     <form method="POST" action="createArticle" enctype='multipart/form-data'>
-        <input type="file" name="file" accept="image/*"/>
+<%--        <input type="file" name="file" accept="image/*"/>--%>
         <div class="form-group">
             <label class="form-label" for="name">Nom :</label>
             <input type="text" id="name" name="name" class="form-control">
         </div>
-        <div>
-            <label class="form-label" for="img">Photo :</label>
-            <input type="file" name="img" class="form-control" id="img">
-        </div>
+<%--        <div>--%>
+<%--            <label class="form-label" for="img">Photo :</label>--%>
+<%--            <input type="file" name="img" class="form-control" id="img">--%>
+<%--        </div>--%>
         <div class="form-group">
             <label class="form-label" for="description">Description :</label>
             <input type="text" id="description" name="description" class="form-control">

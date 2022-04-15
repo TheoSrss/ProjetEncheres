@@ -18,7 +18,6 @@ public class Article {
 
 
     public Article(String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, User lasUser, Category category, Withdrawal withdrawal) {
-//        this.id = id;
         this.name = name;
         this.description = description;
         this.dateStartBid = dateStartBid;
@@ -32,7 +31,6 @@ public class Article {
         this.withdrawal = withdrawal;
     }
     public Article(String name, String description, LocalDateTime dateStartBid, LocalDateTime dateEndBid, float initialPrice, float soldPrice, String stateSale, User user, Category category, Withdrawal withdrawal) {
-//        this.id = id;
         this.name = name;
         this.description = description;
         this.dateStartBid = dateStartBid;

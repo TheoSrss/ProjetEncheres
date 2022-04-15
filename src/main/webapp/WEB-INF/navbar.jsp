@@ -30,7 +30,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <c:if test="${sessionScope.user == null }">
-                <li class="nav-item active"><a class="nav-link" href="login">S'inscire - Se
+                <li class="nav-item active"><a class="nav-link" href="login">S'inscrire - Se
                     connecter</a></li>
             </c:if>
             <c:if test="${sessionScope.user != null }">

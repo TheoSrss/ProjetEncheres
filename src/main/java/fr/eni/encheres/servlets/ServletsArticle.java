@@ -89,13 +89,10 @@ public class ServletsArticle extends HttpServlet {
 
                 if (canBid) {
                     Bid lastBid = bidManager.getLastBidForIdArticle(Integer.parseInt(idArticle));
-                    System.out.println(lastBid);
                     if (lastBid != null) {
 
                         User lastUser = lastBid.getUser();
                         lastUser.setCredit(lastUser.getCredit() + lastBid.getAmount());
-                        System.out.println(lastUser.getId());
-                        System.out.println(lastUser.getCredit());
                         userManager.updateUser(lastUser);
                     }
 
